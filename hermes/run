@@ -1,0 +1,6 @@
+#!/bin/bash
+cd /var/www/meerkat_hermes
+if [ "$DB_URL" = "http://dynamodb:8000" ]
+then ./local_db.py
+fi
+uwsgi --ini /var/www/uwsgi/app.ini --py-autoreload 1

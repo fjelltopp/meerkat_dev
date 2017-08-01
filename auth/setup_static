@@ -1,0 +1,4 @@
+#!/bin/bash
+yarn install
+bower --allow-root install
+gulp

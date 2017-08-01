@@ -1,0 +1,2 @@
+#!/bin/bash
+uwsgi --ini /var/www/uwsgi/app.ini --py-autoreload 1
