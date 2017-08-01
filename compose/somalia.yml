@@ -1,0 +1,158 @@
+version: '2'
+services:
+  hermes:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/hermes/Dockerfile
+    volumes:
+      - "../../meerkat_hermes/:/var/www/meerkat_hermes"
+      - "~/.aws/credentials:/root/.aws/credentials"
+      - ".settings/:/var/www/.settings"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
+    environment:
+      - "CONFIG_OBJECT=config.Development"
+      - "DB_URL=http://dynamodb:8000"
+      - "MEERKAT_HERMES_SETTINGS=/var/www/meerkat_hermes/secret.cfg"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+    hostname: hermes
+
+  abacus:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/abacus/Dockerfile
+    volumes:
+      - "../../meerkat_abacus/:/var/www/meerkat_abacus"
+      - "../../meerkat_api/:/var/www/meerkat_api"
+      - "../../meerkat_somalia/:/var/www/meerkat_somalia"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
+      - "~/.aws/credentials:/root/.aws/credentials"
+    environment:
+      - "START_CELERY=1"
+      - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
+      - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
+      - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
+      - "COUNTRY_CONFIG_DIR=/var/www/meerkat_somalia/abacus/"
+      - "COUNTRY_CONFIG=somalia_config.py"
+      - "GET_DATA_FROM_S3=1"
+      - "NEW_FAKE_DATA=0"
+      - "HERMES_DEV=1"
+      - "HERMES_API_KEY=test-hermes"
+      - "HERMES_API_ROOT=http://nginx/hermes"
+      - "MAILING_KEY=password"
+      - "MAILING_ROOT=http://nginx/reports/email/"
+      - "MEERKAT_TEST_EMAILS=0"
+    depends_on:
+      - db
+      - rabbit
+    hostname: abacus
+
+  api:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/api/Dockerfile
+    volumes:
+      - "../../meerkat_abacus/:/var/www/meerkat_abacus"
+      - "../../meerkat_api/:/var/www/meerkat_api"
+      - "../../meerkat_analysis/:/var/www/meerkat_analysis"
+      - "../../meerkat_somalia/:/var/www/meerkat_somalia"
+      - "./config:/var/www/config"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
+    environment:
+      - MEERKAT_API_SETTINGS=/var/www/meerkat_somalia/api/somalia_config.py
+      - "MEERKAT_API_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
+      - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
+      - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
+      - "COUNTRY_CONFIG_DIR=/var/www/meerkat_somalia/abacus/"
+      - "COUNTRY_CONFIG=somalia_config.py"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+    hostname: api
+
+  frontend:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/frontend/Dockerfile
+    volumes:
+      - "../../meerkat_frontend/:/var/www/meerkat_frontend"
+      - "../../meerkat_somalia/:/var/www/meerkat_somalia"
+      - "../../meerkat_api/:/var/www/meerkat_api"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
+      - "~/.aws/credentials:/root/.aws/credentials"
+    environment:
+      - "MEERKAT_FRONTEND_SETTINGS=/var/www/meerkat_somalia/frontend/somalia_config.py"
+      - "COUNTRY_FOLDER=/var/www/meerkat_somalia"
+      - "HERMES_API_KEY=test-hermes"
+      - "INTERNAL_API_ROOT=http://nginx/api"
+      - "HERMES_DEV=1"
+      - "USE_BASIC_AUTH=0"
+      - "PDFCROWD_API_ACCOUNT=meerkat"
+      - "PDFCROWD_API_KEY=060fdd6a5ca8a47e56ee29a0fc4cb1c6"
+      - "PDFCROWD_USE_EXTERNAL_STATIC_FILES=1"
+      - "PDFCROWD_STATIC_FILE_URL=https://s3-eu-west-1.amazonaws.com/test-meerkat/pdfcrowd-files/static/"
+      - "MAPBOX_MAP_ID=mrjb.143811c9"
+      - "MAPBOX_API_ACCESS_TOKEN=pk.eyJ1IjoibXJqYiIsImEiOiJqTXVObHJZIn0.KQCTcMow5165oToazo4diQ"
+      - "MAPBOX_STATIC_MAP_API_URL=https://api.mapbox.com/v4/"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+      - "HERMES_API_ROOT=http://nginx/hermes"
+    hostname: frontend
+
+  db:
+    image: mdillon/postgis
+    hostname: db
+    ports:
+      - "5432:5432"
+
+  rabbit:
+    image: rabbitmq
+    hostname: rabbit
+
+  dynamodb:
+    image: peopleperhour/dynamodb
+    hostname: dynamodb
+    ports:
+      - "8000:8000"
+
+  auth:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/auth/Dockerfile
+    volumes:
+      - "../../meerkat_auth/:/var/www/meerkat_auth"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
+      - "~/.aws/credentials:/root/.aws/credentials"
+      - ".settings/:/var/www/.settings"
+    environment:
+      - "DB_URL=http://dynamodb:8000"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+      - "MEERKAT_AUTH_ROOT=/auth"
+    hostname: auth
+
+  mob:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/mob/Dockerfile
+    volumes:
+      - "../../meerkat_mob/:/var/www/meerkat_mob"
+      - ".settings/:/var/www/.settings"
+      - "~/.aws/credentials:/root/.aws/credentials"
+    environment:
+      - "CONFIG_OBJECT=config.Development"
+      - "DB_URL=http://dynamodb:8000"
+      - "ORGANIZATION=SOMALIA"
+    hostname: mob
+
+  nginx:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/nginx/Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - "../../meerkat_frontend/:/var/www/meerkat_frontend"
+      - "../../meerkat_somalia/frontend/static/:/var/www/meerkat_somalia/frontend/static"
+      - "../../meerkat_docs/:/var/www/meerkat_docs"
+      - "../../meerkat_api/api_background/api_background/exported_data:/var/www/meerkat_api/api_background/api_background/exported_data"
+    depends_on:
+      - api
+      - frontend
+      - mob
+    hostname: nginx

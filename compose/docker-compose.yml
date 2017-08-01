@@ -20,13 +20,13 @@ services:
 
   abacus:
     build:
-      context: ../
+      context: ../../
       dockerfile: meerkat_dev/abacus/Dockerfile
     volumes:
-      - "../meerkat_abacus/:/var/www/meerkat_abacus"
-      - "../meerkat_api/:/var/www/meerkat_api"
-      - "../meerkat_frontend/:/var/www/meerkat_frontend"
-      - "../meerkat_libs/:/var/www/meerkat_libs"
+      - "../../meerkat_abacus/:/var/www/meerkat_abacus"
+      - "../../meerkat_api/:/var/www/meerkat_api"
+      - "../../meerkat_frontend/:/var/www/meerkat_frontend"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
     environment:
       - "START_CELERY=1"
       - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
@@ -46,13 +46,13 @@ services:
 
   api:
     build:
-      context: ../
+      context: ../../
       dockerfile: meerkat_dev/api/Dockerfile
     volumes:
-      - "../meerkat_abacus/:/var/www/meerkat_abacus"
-      - "../meerkat_analysis/:/var/www/meerkat_analysis"
-      - "../meerkat_api/:/var/www/meerkat_api"
-      - "../meerkat_libs/:/var/www/meerkat_libs"
+      - "../../meerkat_abacus/:/var/www/meerkat_abacus"
+      - "../../meerkat_analysis/:/var/www/meerkat_analysis"
+      - "../../meerkat_api/:/var/www/meerkat_api"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
     environment:
       - "MEERKAT_API_SETTINGS=/var/www/meerkat_api/country_config/null_config.py"
       - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
@@ -64,12 +64,12 @@ services:
 
   frontend:
     build:
-      context: ../
+      context: ../../
       dockerfile: meerkat_dev/frontend/Dockerfile
     volumes:
-      - "../meerkat_frontend/:/var/www/meerkat_frontend"
-      - "../meerkat_api/:/var/www/meerkat_api"
-      - "../meerkat_libs/:/var/www/meerkat_libs"
+      - "../../meerkat_frontend/:/var/www/meerkat_frontend"
+      - "../../meerkat_api/:/var/www/meerkat_api"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
     environment:
       - "HERMES_API_KEY=test-hermes"
       - "HERMES_DEV=1"
@@ -89,13 +89,13 @@ services:
 
   hermes:
     build:
-      context: ../
+      context: ../../
       dockerfile: meerkat_dev/hermes/Dockerfile
     volumes:
-      - "../meerkat_hermes:/var/www/meerkat_hermes"
+      - "../../meerkat_hermes:/var/www/meerkat_hermes"
       - ".settings/:/var/www/.settings"
       - "~/.aws/credentials:/root/.aws/credentials"
-      - "../meerkat_libs/:/var/www/meerkat_libs"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
     environment:
       - "CONFIG_OBJECT=config.Development"
       - "DB_URL=http://dynamodb:8000"
@@ -105,13 +105,13 @@ services:
 
   auth:
     build:
-      context: ../
+      context: ../../
       dockerfile: meerkat_dev/auth/Dockerfile
     volumes:
-      - "../meerkat_auth/:/var/www/meerkat_auth"
+      - "../../meerkat_auth/:/var/www/meerkat_auth"
       - ".settings/:/var/www/.settings"
       - "~/.aws/credentials:/root/.aws/credentials"
-      - "../meerkat_libs/:/var/www/meerkat_libs"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
     environment:
       - "DB_URL=http://dynamodb:8000"
       - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
@@ -121,10 +121,10 @@ services:
 
   mob:
     build:
-      context: ../
+      context: ../../
       dockerfile: meerkat_dev/mob/Dockerfile
     volumes:
-      - "../meerkat_mob/:/var/www/meerkat_mob"
+      - "../../meerkat_mob/:/var/www/meerkat_mob"
       - ".settings/:/var/www/.settings"
       - "~/.aws/credentials:/root/.aws/credentials"
     environment:
@@ -135,10 +135,10 @@ services:
 
   logging:
     build:
-      context: ../
+      context: ../../
       dockerfile: meerkat_dev/logging/Dockerfile
     volumes:
-      - "../meerkat_logging/:/var/www/meerkat_logging"
+      - "../../meerkat_logging/:/var/www/meerkat_logging"
     environment:
       - "CONFIG_OBJECT=config.Development"
       - "SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://postgres:postgres@db/event_db"
@@ -146,14 +146,14 @@ services:
 
   nginx:
     build:
-      context: ../
+      context: ../../
       dockerfile: meerkat_dev/nginx/Dockerfile
     ports:
       - "80:80"
     volumes:
-      - "../meerkat_frontend/:/var/www/meerkat_frontend"
-      - "../meerkat_api/api_background/api_background/exported_data:/var/www/meerkat_api/api_background/api_background/exported_data"
-      - "../meerkat_docs/:/var/www/meerkat_docs"
+      - "../../meerkat_frontend/:/var/www/meerkat_frontend"
+      - "../../meerkat_api/api_background/api_background/exported_data:/var/www/meerkat_api/api_background/api_background/exported_data"
+      - "../../meerkat_docs/:/var/www/meerkat_docs"
     depends_on:
       - api
       - frontend
