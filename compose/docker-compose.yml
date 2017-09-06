@@ -29,7 +29,7 @@ services:
       - "../abacus/dumps/:/var/www/dumps"
     environment:
       - "START_CELERY=1"
-      - "DB_DUMP=test_dump"
+      - "DB_DUMP="
       - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
       - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
       - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
