@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  docs:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/docs/Dockerfile
+    hostname: docs
+    volumes:
+        - "../../meerkat_frontend/:/var/www/meerkat_frontend"
+        - "../../meerkat_api/:/var/www/meerkat_api"
+        - "../../meerkat_analysis/:/var/www/meerkat_analysis"
+        - "../../meerkat_docs/:/var/www/meerkat_docs"
+        - "../../meerkat_abacus/:/var/www/meerkat_abacus"
+        - "../../meerkat_hermes/:/var/www/meerkat_hermes"
+        - "../../meerkat_auth/:/var/www/meerkat_auth"
+        - "../../meerkat_libs/:/var/www/meerkat_libs"
+    environment:
+      - "MEERKAT_FRONTEND_SETTINGS=/var/www/meerkat_frontend/country_config/null_config.py"
+      - "MEERKAT_HERMES_SETTINGS=/var/www/meerkat_hermes/config.py"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
