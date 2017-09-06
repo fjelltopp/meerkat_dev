@@ -1,7 +1,6 @@
 version: '2'
 
 services:
-
   db:
     image: mdillon/postgis
     hostname: db
@@ -27,8 +26,10 @@ services:
       - "../../meerkat_api/:/var/www/meerkat_api"
       - "../../meerkat_frontend/:/var/www/meerkat_frontend"
       - "../../meerkat_libs/:/var/www/meerkat_libs"
+      - "../abacus/dumps/:/var/www/dumps"
     environment:
       - "START_CELERY=1"
+      - "DB_DUMP=test_dump"
       - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
       - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
       - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
