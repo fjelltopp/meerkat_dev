@@ -50,3 +50,5 @@ Thumbs.db
 
 #Emacs
 .#*
+
+abacus/dumps/*
