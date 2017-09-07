@@ -1,9 +1,10 @@
 version: '2'
-
 services:
   db:
     image: mdillon/postgis
     hostname: db
+    environment:
+        - "COUNTRY=demo"
     ports:
       - "5432:5432"
 
