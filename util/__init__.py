@@ -17,7 +17,6 @@ def run_repo(args, extra_args):
         extra_args ([str]): A list of strings detailing any extra unkown args
             supplied by the user
     """
-    print(args.action)
     if args.action == "repo":
         print(extra_args)
         repo.main(extra_args)
@@ -76,7 +75,4 @@ def init(args, extra_args):
     if ('-h' or '--help') in extra_args:
         repo.main(['init', '-h'])
     else:
-        repo.main(
-            ['init', '--reference', '..', '-u', MANIFEST_URL] + extra_args
-        )
-        repo.main(['sync'])
+        repo.main(['init', '-u', MANIFEST_URL] + extra_args)
