@@ -73,9 +73,10 @@ def init(args, extra_args):
     Initialises the parent directory to be the Meerkat code base folder.
     Optionally specify which manifest to use.
     """
-    if '-h' or '--help' in extra_args:
+    if ('-h' or '--help') in extra_args:
         repo.main(['init', '-h'])
     else:
         repo.main(
             ['init', '--reference', '..', '-u', MANIFEST_URL] + extra_args
         )
+        repo.main(['sync'])
