@@ -18,6 +18,14 @@ subparsers = parser.add_subparsers(
 actions = {}
 
 # Add the Google repo command arguments
+actions['init'] = subparsers.add_parser(
+    'init',
+    description='Runs the Google Repo "init" command.',
+    help='Gets the Meerkat code base and sets things up (uses Google repo).',
+    add_help=False
+)
+actions['init'].set_defaults(func=util.init)
+
 actions['sync'] = subparsers.add_parser(
     'sync',
     description='Runs the Google Repo "sync" command',
@@ -64,11 +72,19 @@ actions['repo'].set_defaults(func=util.run_repo)
 # The db dump argument parsing
 actions['dump'] = subparsers.add_parser(
     'dump',
-    description='Dumps the current database into the specified file',
-    help='Dumps the current Meerkat database into the specified file',
-    add_help=False
+    description='Dumps the current database into a file',
+    help='Dumps the current Meerkat database into a file'
 )
 actions['dump'].set_defaults(func=util.dump)
+actions['dump'].add_argument(
+    '-l', '--list',
+    help='List existing dumps',
+    action='store_true'
+)
+actions['dump'].add_argument(
+    '-t', '--tag',
+    help='An optional tag to attach to the dump filename'
+)
 
 
 def main(orig_args):
