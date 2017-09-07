@@ -103,9 +103,9 @@ JuinEP+AwLAUZ1Bsx9ISC0Agpk2VeHXPL3FGhroEmoMvBzO0kTFGyoeT7PR/BfKv
 -----END PGP PUBLIC KEY BLOCK-----
 """
 
+repodir = os.path.abspath(os.path.dirname(__file__)) + '/../../.repo'
 GIT = 'git'                      # our git command
 MIN_GIT_VERSION = (1, 7, 2)      # minimum supported git version
-repodir = '.repo'                # name of repo's private directory
 S_repo = 'repo'                  # special repo repository
 S_manifests = 'manifests'        # special manifest repository
 REPO_MAIN = S_repo + '/main.py'  # main script
