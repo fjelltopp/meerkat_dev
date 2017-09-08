@@ -7,24 +7,24 @@ DUMPS_PATH = os.path.abspath(os.path.dirname(__file__)) + "/../abacus/dumps/"
 MANIFEST_URL = "git@github.com:meerkat-code/meerkat.git"
 
 
-def run_repo(args, extra_args):
+def run_repo(args, extra):
     """
     Run's a Google Repo command by just forwarding the supplied args to the
     main() function of the Google Repo script.
 
     Args:
         args (NameSpace): The known args NameSpace object returned by argsparse
-        extra_args ([str]): A list of strings detailing any extra unkown args
+        extra ([str]): A list of strings detailing any extra unkown args
             supplied by the user
     """
     if args.action == "repo":
-        print(extra_args)
-        repo.main(extra_args)
+        print(extra)
+        repo.main(extra)
     else:
-        repo.main([args.action] + extra_args)
+        repo.main([args.action] + extra)
 
 
-def dump(args, extra_args):
+def dump(args, extra):
     """
     Takes a database dump and stores it in the DB_DUMPS_FOLDER.
     DB dumps are named using the country, date, time and an optional tag
@@ -67,15 +67,15 @@ def dump(args, extra_args):
     ])
 
 
-def init(args, extra_args):
+def init(args, extra):
     """
     Initialises the parent directory to be the Meerkat code base folder.
     Optionally specify which manifest to use.
     """
-    if ('-h' or '--help') in extra_args:
+    if ('-h' or '--help') in extra:
         repo.main(['init', '-h'])
     else:
         print('This will destroy changes, resetting everything to the remote.')
         if raw_input(' ARE YOU SURE YOU WANT TO CONTINUE? (Y/n) ') is 'Y':
-            repo.main(['init', '-u', MANIFEST_URL] + extra_args)
+            repo.main(['init', '-u', MANIFEST_URL] + extra)
             repo.main(['sync', '--force-sync'])
