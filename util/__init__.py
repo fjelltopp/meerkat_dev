@@ -79,3 +79,5 @@ def init(args, extra):
         if raw_input(' ARE YOU SURE YOU WANT TO CONTINUE? (Y/n) ') is 'Y':
             repo.main(['init', '-u', MANIFEST_URL] + extra)
             repo.main(['sync', '--force-sync'])
+            repo.main(['forall', '-c', 'git', 'checkout', 'master'])
+            repo.main(['forall', '-c', 'git', 'checkout', 'development'])
