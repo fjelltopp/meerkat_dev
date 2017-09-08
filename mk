@@ -17,15 +17,16 @@ subparsers = parser.add_subparsers(
 )
 actions = {}
 
-# Add the Google repo command arguments
-actions['init'] = subparsers.add_parser(
-    'init',
-    description='Runs the Google Repo "init" command.',
-    help='Gets the Meerkat code base and sets things up (uses Google repo).',
+# Add the setup command arguments
+actions['setup'] = subparsers.add_parser(
+    'setup',
+    description='Sets up the Meerkat code base locally',
+    help='Sets up the Meerkat codebase locally (uses Google repo).',
     add_help=False
 )
-actions['init'].set_defaults(func=util.init)
+actions['setup'].set_defaults(func=util.init)
 
+# Add the Google repo command arguments
 actions['sync'] = subparsers.add_parser(
     'sync',
     description='Runs the Google Repo "sync" command',

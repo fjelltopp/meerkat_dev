@@ -76,7 +76,7 @@ def init(args, extra):
     if ('-h' or '--help') in extra:
         repo.main(['init', '-h'])
     else:
-        print('Setting up the Meerkat codebase locally.')
+        print('Setting up the Meerkat codebase...')
         print('This will destroy changes, resetting everything to the remote.')
         if raw_input('ARE YOU SURE YOU WANT TO CONTINUE? (Y/n) ') is 'Y':
             repo.main(['init', '-u', MANIFEST_URL] + extra)
@@ -89,7 +89,8 @@ def init(args, extra):
                     ['forall', '-c', 'git', 'checkout', '-q', 'development']
                 )
             except subprocess.CalledProcessError:
-                print("Some repos do not have a development branch.")
-            print('Local development and master branches created.')
-            print('Development branch checked out where available.')
-            print('SETUP COMPLETE')
+                print('Some repos do not have a development branch.')
+
+            print('Master and Development branches created on your '
+                  'local machine.\nDevelopment branch checked out where '
+                  'available.\nSETUP COMPLETE')
