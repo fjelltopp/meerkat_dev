@@ -822,10 +822,10 @@ def _SetDefaultsTo(gitdir):
 def main(orig_args):
   _print(str(orig_args))
   global extra_args
-  _print(extra_args)
+  _print(str(extra_args)
   extra_args = []
-  _print(extra_args)
-  
+  _print(str(extra_args))
+
   cmd, opt, args = _ParseArguments(orig_args)
 
   repo_main, rel_repo_dir = None, None
