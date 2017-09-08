@@ -1,6 +1,7 @@
 import repo
 import subprocess
 import os
+from xml.etree import ElementTree
 from datetime import datetime
 
 DUMPS_PATH = os.path.abspath(os.path.dirname(__file__)) + "/../abacus/dumps/"
@@ -80,4 +81,10 @@ def init(args, extra):
             repo.main(['init', '-u', MANIFEST_URL] + extra)
             repo.main(['sync', '--force-sync'])
             repo.main(['forall', '-c', 'git', 'checkout', 'master'])
-            repo.main(['forall', '-c', 'git', 'checkout', 'development'])
+
+            try:
+                repo.main(
+                    ['forall', '-c', 'git', 'checkout', '-q', 'development']
+                )
+            except subprocess.CalledProcessError:
+                print("Some repos do not have a master branch.")
