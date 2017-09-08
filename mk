@@ -28,7 +28,7 @@ actions['setup'].add_argument(
     help='Download the complete development environment, including secure '
          'country config repos - N.B. you will need special access to be '
          'granted by the Meerkat Administrators to use this setup.',
-    actions='store_true'
+    action='store_true'
 )
 actions['setup'].set_defaults(func=util.setup)
 
