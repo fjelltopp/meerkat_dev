@@ -821,6 +821,7 @@ def _SetDefaultsTo(gitdir):
 
 def main(orig_args):
   _print(str(orig_args))
+  _print(str(extra_args))
   cmd, opt, args = _ParseArguments(orig_args)
 
   repo_main, rel_repo_dir = None, None
@@ -870,7 +871,6 @@ def main(orig_args):
   me.extend(extra_args)
   try:
     subprocess.check_output(me)
-    extra_args = []
   except OSError as e:
     _print("fatal: unable to start %s" % repo_main, file=sys.stderr)
     _print("fatal: %s" % e, file=sys.stderr)
