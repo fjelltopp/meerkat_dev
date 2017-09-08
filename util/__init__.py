@@ -6,6 +6,8 @@ from datetime import datetime
 
 DUMPS_PATH = os.path.abspath(os.path.dirname(__file__)) + "/../abacus/dumps/"
 MANIFEST_URL = "git@github.com:meerkat-code/meerkat.git"
+DEV_MANIFEST = 'dev.xml'
+DEMO_MANIFEST = 'demo.xml'
 
 
 def run_repo(args, extra):
@@ -75,8 +77,10 @@ def setup(args, extra):
     """
     print('Setting up the Meerkat codebase...')
     print('This will destroy changes, resetting everything to the remote.')
+
     if raw_input('ARE YOU SURE YOU WANT TO CONTINUE? (Y/n) ') is 'Y':
-        repo.main(['init', '-u', MANIFEST_URL] + extra)
+        manifest = DEV_MANIFEST if args.all else DEMO_MANIFEST
+        repo.main(['init', '-u', MANIFEST_URL, '-m', manifest])
         repo.main(['sync', '--force-sync'])
         print('Meerkat code synced')
         repo.main(['forall', '-c', 'git', 'checkout', 'master'])
