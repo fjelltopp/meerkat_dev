@@ -75,4 +75,7 @@ def init(args, extra_args):
     if ('-h' or '--help') in extra_args:
         repo.main(['init', '-h'])
     else:
-        repo.main(['init', '-u', MANIFEST_URL] + extra_args)
+        print('This will destroy changes, resetting everything to the remote.')
+        if input(' ARE YOU SURE YOU WANT TO CONTINUE? (Y/n) ') is 'Y':
+            repo.main(['init', '-u', MANIFEST_URL] + extra_args)
+            repo.main(['sync', '--force-sync'])

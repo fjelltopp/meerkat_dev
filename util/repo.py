@@ -2,6 +2,7 @@
 # repo default configuration
 #
 import os
+import subprocess
 REPO_URL = os.environ.get('REPO_URL', None)
 if not REPO_URL:
   REPO_URL = 'https://gerrit.googlesource.com/git-repo'
@@ -867,7 +868,7 @@ def main(orig_args):
   me.extend(orig_args)
   me.extend(extra_args)
   try:
-    os.execv(sys.executable, me)
+    subprocess.check_output(me)
   except OSError as e:
     _print("fatal: unable to start %s" % repo_main, file=sys.stderr)
     _print("fatal: %s" % e, file=sys.stderr)
