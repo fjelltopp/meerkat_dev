@@ -822,7 +822,7 @@ def _SetDefaultsTo(gitdir):
 def main(orig_args):
   _print(str(orig_args))
   global extra_args
-  _print(str(extra_args)
+  _print(str(extra_args))
   extra_args = []
   _print(str(extra_args))
 
