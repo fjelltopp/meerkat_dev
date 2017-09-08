@@ -68,29 +68,24 @@ def dump(args, extra):
     ])
 
 
-def init(args, extra):
+def setup(args, extra):
     """
     Initialises the parent directory to be the Meerkat code base folder.
     Optionally specify which manifest to use.
     """
-    if ('-h' or '--help') in extra:
-        repo.main(['init', '-h'])
-    else:
-        print('Setting up the Meerkat codebase...')
-        print('This will destroy changes, resetting everything to the remote.')
-        if raw_input('ARE YOU SURE YOU WANT TO CONTINUE? (Y/n) ') is 'Y':
-            repo.main(['init', '-u', MANIFEST_URL] + extra)
-            repo.main(['sync', '--force-sync'])
-            print('Meerkat code synced')
-            repo.main(['forall', '-c', 'git', 'checkout', 'master'])
-
-            try:
-                repo.main(
-                    ['forall', '-c', 'git', 'checkout', '-q', 'development']
-                )
-            except subprocess.CalledProcessError:
-                print('Some repos do not have a development branch.')
-
-            print('Master and Development branches created on your '
-                  'local machine.\nDevelopment branch checked out where '
-                  'available.\nSETUP COMPLETE')
+    print('Setting up the Meerkat codebase...')
+    print('This will destroy changes, resetting everything to the remote.')
+    if raw_input('ARE YOU SURE YOU WANT TO CONTINUE? (Y/n) ') is 'Y':
+        repo.main(['init', '-u', MANIFEST_URL] + extra)
+        repo.main(['sync', '--force-sync'])
+        print('Meerkat code synced')
+        repo.main(['forall', '-c', 'git', 'checkout', 'master'])
+        try:
+            repo.main(
+                ['forall', '-c', 'git', 'checkout', '-q', 'development']
+            )
+        except subprocess.CalledProcessError:
+            print('Some repos do not have a development branch.')
+        print('Master and Development branches created on your '
+              'local machine.\nDevelopment branch checked out where '
+              'available.\nSETUP COMPLETE')

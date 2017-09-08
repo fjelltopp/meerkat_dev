@@ -22,9 +22,14 @@ actions['setup'] = subparsers.add_parser(
     'setup',
     description='Sets up the Meerkat code base locally',
     help='Sets up the Meerkat codebase locally (uses Google repo).',
-    add_help=False
 )
-actions['setup'].set_defaults(func=util.init)
+actions['setup'].add_argument(
+    '-a', '--all',
+    help='Download the complete development environment, including secure '
+         'country config repos - N.B. you will need special access to be '
+         'granted by the Meerkat Administrators to use this setup.'
+)
+actions['setup'].set_defaults(func=util.setup)
 
 # Add the Google repo command arguments
 actions['sync'] = subparsers.add_parser(
