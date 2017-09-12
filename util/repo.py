@@ -875,8 +875,6 @@ def main(orig_args):
   me.extend(orig_args)
   me.extend(extra_args)
   try:
-    _print(str(orig_args))
-
     # HACK: os.execv far more reliable and cross-platform
     # But no return after calling it, to run mk init, we need to return.
     # Make it optional to run using os.system instead.
