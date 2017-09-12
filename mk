@@ -1,8 +1,9 @@
 #!/usr/bin/python2
-
-import argparse
+from util import dev_accounts
 import util
+import argparse
 import sys
+
 
 # ARGUMENT PARSING ------------------------------------------------------------
 parser = argparse.ArgumentParser(
@@ -93,14 +94,45 @@ actions['dump'].add_argument(
     help='An optional tag to attach to the dump filename'
 )
 
+# The developers accounts scripts
+actions['users'] = subparsers.add_parser(
+    'users',
+    description="A script that stores and administers personal "
+                "details about the developer so that tailored auth and hermes "
+                "accounts can be created in the dev environment.  These "
+                "details are ignored by github and only stored locally.",
+    help='Creates a new dev user, enabling the user to receive slack, '
+         'email and text notifications from the development environment.'
+)
+actions['users'].set_defaults(func=dev_accounts.users)
+actions['users'].add_argument(
+    '--list',
+    help='List the currently existing developer\'s accounts.',
+    action='store_true'
+)
+actions['users'].add_argument(
+    '--clear',
+    help='Clear all developer\'s accounts.',
+    action='store_true'
+)
+actions['users'].add_argument(
+    '--add',
+    help='Add a new developer account.',
+    action='store_true'
+)
+actions['users'].add_argument(
+    '--remove',
+    help='Remove a developer account.',
+    action='store_true'
+)
+
 
 def main(orig_args):
     # Parse both args we recognise
-    args, extra_args = parser.parse_known_args()
+    args, extra_args = parser.parse_known_args(orig_args)
 
     if hasattr(args, 'func'):
         # Parse the args!
-        args, extra_args = parser.parse_known_args()
         args.func(args, extra_args)
     else:
         parser.print_help()
