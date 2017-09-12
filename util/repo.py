@@ -871,7 +871,16 @@ def main(orig_args):
   me.extend(orig_args)
   me.extend(extra_args)
   try:
-    os.system(' '.join(me))
+    _print(str(orig_args))
+
+    # HACK: os.execv far more reliable and cross-platform
+    # But no return after calling it, to run mk init, we need to return.
+    # Make it optional to run using os.system instead.
+    if '--return' in orig_args:
+        me.remove('--return')
+        os.system(' '.join(me))
+    else:
+        os.execv(sys.executable, me)
   except OSError as e:
     _print("fatal: unable to start %s" % repo_main, file=sys.stderr)
     _print("fatal: %s" % e, file=sys.stderr)

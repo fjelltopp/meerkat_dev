@@ -80,14 +80,12 @@ def setup(args, extra):
 
     if raw_input('ARE YOU SURE YOU WANT TO CONTINUE? (Y/n) ') is 'Y':
         manifest = DEV_MANIFEST if args.all else DEMO_MANIFEST
-        repo.main(['init', '-u', MANIFEST_URL, '-m', manifest])
-        repo.main(['sync', '--force-sync'])
+        repo.main(['init', '-u', MANIFEST_URL, '-m', manifest, '--return'])
+        repo.main(['sync', '--force-sync', '--return'])
         print('Meerkat code synced')
-        repo.main(['forall', '-c', 'git', 'checkout', 'master'])
+        repo.main(['forall', '-c', 'git', 'checkout', 'master', '--return'])
         try:
-            repo.main(
-                ['forall', '-c', 'git', 'checkout', '-q', 'development']
-            )
+            repo.main(['forall', '-c', 'git', 'checkout', '-q', 'development'])
         except subprocess.CalledProcessError:
             print('Some repos do not have a development branch.')
         print('Master and Development branches created on your '
