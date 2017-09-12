@@ -820,15 +820,14 @@ def _SetDefaultsTo(gitdir):
 
 
 def main(orig_args):
-  _print(str(orig_args))
-  _print(str(bool('--return' in orig_args)))
   global extra_args
   extra_args = []
+  return_flag = False
+  if '--return' in orig_args:
+      return_flag = True
+      orig_args.remove('--return')
 
-  args = orig_args
-  args.remove('--return')
-
-  cmd, opt, args = _ParseArguments(args)
+  cmd, opt, args = _ParseArguments(orig_args)
 
   repo_main, rel_repo_dir = None, None
   # Don't use the local repo copy, make sure to switch to the gitc client first.
@@ -881,8 +880,7 @@ def main(orig_args):
     # HACK: os.execv far more reliable and cross-platform
     # But no return after calling it, to run mk init, we need to return.
     # Make it optional to run using os.system instead.
-    if '--return' in orig_args:
-        me.remove('--return')
+    if return_flag:
         os.system(' '.join(me))
     else:
         os.execv(sys.executable, me)

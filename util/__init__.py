@@ -85,9 +85,13 @@ def setup(args, extra):
         print('Meerkat code synced')
         repo.main(['forall', '-c', 'git', 'checkout', 'master', '--return'])
         try:
-            repo.main(['forall', '-c', 'git', 'checkout', '-q', 'development'])
+            repo.main(['forall', '-c', 'git', 'checkout',
+                       '-q', 'development', '--return'])
         except subprocess.CalledProcessError:
             print('Some repos do not have a development branch.')
+
         print('Master and Development branches created on your '
               'local machine.\nDevelopment branch checked out where '
-              'available.\nSETUP COMPLETE')
+              'available.')
+        repo.main(['status', '--return'])
+        print('--SETUP COMPLETE--')
