@@ -820,10 +820,15 @@ def _SetDefaultsTo(gitdir):
 
 
 def main(orig_args):
+  _print(str(orig_args))
+  _print(str(bool('--return' in orig_args)))
   global extra_args
   extra_args = []
 
-  cmd, opt, args = _ParseArguments(orig_args)
+  args = orig_args
+  args.remove('--return')
+
+  cmd, opt, args = _ParseArguments(args)
 
   repo_main, rel_repo_dir = None, None
   # Don't use the local repo copy, make sure to switch to the gitc client first.
