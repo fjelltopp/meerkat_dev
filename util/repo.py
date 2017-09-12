@@ -871,7 +871,7 @@ def main(orig_args):
   me.extend(orig_args)
   me.extend(extra_args)
   try:
-    subprocess.check_output(me)
+    os.system(' '.join(me))
   except OSError as e:
     _print("fatal: unable to start %s" % repo_main, file=sys.stderr)
     _print("fatal: %s" % e, file=sys.stderr)
