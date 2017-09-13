@@ -57,7 +57,7 @@ def users(args, extra):
 
     # PERFORM THE DESIRED ACTION
     # List the accounts already created.
-    if args.list:
+    if args.action == 'list':
 
         # Set things up
         if users:
@@ -75,7 +75,7 @@ def users(args, extra):
             ))
 
     # Add a new developer account.
-    if args.add:
+    if args.action == 'add':
 
         # Set things up
         user = {}
@@ -112,7 +112,7 @@ def users(args, extra):
         ))
 
     # Remove an already existing account.
-    if args.remove:
+    if args.action == 'remove':
 
         # Set things up
         print("Removing a developer's account:")
@@ -136,7 +136,7 @@ def users(args, extra):
             print("Cancelled deletion. User remains.")
 
     # Clear all accounts that have been created.
-    if args.clear:
+    if args.action == 'clear':
 
         # Check that the user really wants to clear all accounts.
         check = raw_input('Are you sure you want to clear all accounts? y/n ')

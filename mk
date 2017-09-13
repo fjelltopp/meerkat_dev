@@ -105,25 +105,26 @@ actions['users'] = subparsers.add_parser(
          'email and text notifications from the development environment.'
 )
 actions['users'].set_defaults(func=dev_accounts.users)
-actions['users'].add_argument(
-    '--list',
+users_parser = actions['users'].add_subparsers(
+    title="What would you like to do?",
+    metavar='action',
+    dest='action'
+)
+users_parser.add_parser(
+    'list',
     help='List the currently existing developer\'s accounts.',
-    action='store_true'
 )
-actions['users'].add_argument(
-    '--clear',
+users_parser.add_parser(
+    'clear',
     help='Clear all developer\'s accounts.',
-    action='store_true'
 )
-actions['users'].add_argument(
-    '--add',
+users_parser.add_parser(
+    'add',
     help='Add a new developer account.',
-    action='store_true'
 )
-actions['users'].add_argument(
-    '--remove',
+users_parser.add_parser(
+    'remove',
     help='Remove a developer account.',
-    action='store_true'
 )
 
 
