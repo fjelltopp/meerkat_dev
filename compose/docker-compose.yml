@@ -140,10 +140,12 @@ services:
       context: ../../
       dockerfile: meerkat_dev/logging/Dockerfile
     volumes:
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
       - "../../meerkat_logging/:/var/www/meerkat_logging"
     environment:
       - "CONFIG_OBJECT=config.Development"
       - "SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://postgres:postgres@db/event_db"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
     hostname: logging
 
   nginx:
