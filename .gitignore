@@ -51,5 +51,4 @@ Thumbs.db
 #Emacs
 .#*
 
-abacus/dumps/*
 .settings/*
