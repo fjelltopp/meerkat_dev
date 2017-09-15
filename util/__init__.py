@@ -4,10 +4,11 @@ import subprocess
 import os
 from datetime import datetime
 
-DUMPS_PATH = os.path.abspath(os.path.dirname(__file__)) + "/../abacus/dumps/"
 MANIFEST_URL = "git@github.com:meerkat-code/meerkat.git"
 DEV_MANIFEST = 'dev.xml'
 DEMO_MANIFEST = 'default.xml'
+DUMPS_PATH = (os.path.abspath(os.path.dirname(__file__)) +
+              "/../.settings/dumps/")
 
 
 def run_repo(args, extra):
