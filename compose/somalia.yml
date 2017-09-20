@@ -142,6 +142,18 @@ services:
       - "ORGANIZATION=SOMALIA"
     hostname: mob
 
+  consul:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/consul/Dockerfile
+    volumes:
+      - "../../meerkat_consul/:/var/www/meerkat_consul"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
+    environment:
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+      - "MEERKAT_API_URL=http://nginx/api"
+    hostname: consul
+
   nginx:
     build:
       context: ../../
