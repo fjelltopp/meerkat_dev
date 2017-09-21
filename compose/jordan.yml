@@ -12,8 +12,7 @@ services:
       - ../../meerkat_jordan/:/var/www/meerkat_jordan
       - ~/.aws/credentials:/root/.aws/credentials
       - ../../meerkat_libs/:/var/www/meerkat_libs
-    env_file:
-      - ./env.env
+
     environment:
       - START_CELERY=1
       - DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/
@@ -22,11 +21,8 @@ services:
       - COUNTRY_CONFIG_DIR=/var/www/meerkat_jordan/abacus/
       - COUNTRY_CONFIG=jordan_config.py
       - HERMES_API_ROOT=http://nginx/hermes
-      - MAILING_ROOT=http://nginx/reports/email/
-      - NEW_FAKE_DATA
-      - MEERKAT_TEST_EMAILS
-      - GET_DATA_FROM_S3
-      - IMPORT_FRACTION
+      - MAILING_ROOT=http://nginx/reports/email/s
+      - DB_DUMP=${DB_DUMP}
     depends_on:
       - db
       - rabbit
