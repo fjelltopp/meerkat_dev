@@ -5,6 +5,8 @@ import sys
 from datetime import datetime
 
 # Some settings
+# If you run docker with sudo, set envvar DOCKER_SUDO=True
+SUDO = 'sudo' if os.environ.get('DOCKER_SUDO', False) else ''
 MANIFEST_URL = "git@github.com:meerkat-code/meerkat.git"
 DEV_MANIFEST = 'dev.xml'
 DEMO_MANIFEST = 'default.xml'
@@ -19,8 +21,9 @@ def call_command(args):
     Run a shell command with proper error logging.
     """
     try:
+        print(' '.join(args).strip())
         retcode = subprocess.call(
-            ' '.join(args),
+            ' '.join(args).strip(),
             shell=True,
             cwd=COMPOSE_PATH
         )
@@ -64,7 +67,7 @@ def up(args, extra_args):
     command = '"{}"'.format(' '.join(env + compose + up))
 
     # Run the command
-    call_command(['sudo', 'sh', '-c', command])
+    call_command([SUDO, 'sh', '-c', command])
 
 
 def run_docker_compose(args, extra_args):
@@ -77,11 +80,11 @@ def run_docker_compose(args, extra_args):
             supplied by the user
     """
     if args.action == 'dc':
-        call_command(["sudo", "docker-compose"] + extra_args)
+        call_command([SUDO, "docker-compose"] + extra_args)
     if args.action == 'logs':
-        call_command(["sudo", "docker-compose", "logs", "-f"] + extra_args)
+        call_command([SUDO, "docker-compose", "logs", "-f"] + extra_args)
     else:
-        call_command(["sudo", "docker-compose", args.action] + extra_args)
+        call_command([SUDO, "docker-compose", args.action] + extra_args)
 
 
 def run_docker_exec(args, extra_args):
@@ -93,7 +96,7 @@ def run_docker_exec(args, extra_args):
         extra ([str]): A list of strings detailing any extra unkown args
             supplied by the user
     """
-    call_command(["sudo", "/usr/bin/docker", "exec"] + extra_args)
+    call_command([SUDO, "/usr/bin/docker", "exec"] + extra_args)
 
 
 def bash(args, extra_args):
@@ -115,7 +118,7 @@ def bash(args, extra_args):
 
     # Run the bash command
     call_command(
-        ["sudo", "/usr/bin/docker", "exec", "-ti", container, "bash"]
+        [SUDO, "/usr/bin/docker", "exec", "-ti", container, "bash"]
     )
 
 
@@ -153,7 +156,7 @@ def dump(args, extra):
     # Get params for the filename. The country is stored in DB env variable
     time = datetime.now().strftime("%y%m%d_%H%M%S")
     country = subprocess.check_output([
-        "sudo", "docker",  "exec", "-ti", "compose_db_1", "sh", "-c",
+        SUDO, "docker",  "exec", "-ti", "compose_db_1", "sh", "-c",
         "echo \"$COUNTRY\""
     ]).strip()
 
