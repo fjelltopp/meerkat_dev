@@ -33,14 +33,16 @@ services:
       - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
       - "COUNTRY_CONFIG_DIR=/var/www/meerkat_somalia/abacus/"
       - "COUNTRY_CONFIG=somalia_config.py"
-      - "GET_DATA_FROM_S3=1"
-      - "NEW_FAKE_DATA=0"
       - "HERMES_DEV=1"
       - "HERMES_API_KEY=test-hermes"
       - "HERMES_API_ROOT=http://nginx/hermes"
       - "MAILING_KEY=password"
       - "MAILING_ROOT=http://nginx/reports/email/"
-      - "MEERKAT_TEST_EMAILS=0"
+      - DB_DUMP
+      - IMPORT_FRACTION
+      - GET_DATA_FROM_S3
+      - NEW_FAKE_DATA
+      - MEERKAT_TEST_EMAILS
     depends_on:
       - db
       - rabbit

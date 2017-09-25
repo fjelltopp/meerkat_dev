@@ -30,17 +30,20 @@ services:
       - "../abacus/dumps/:/var/www/dumps"
     environment:
       - "START_CELERY=1"
-      - "DB_DUMP="
       - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
       - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
       - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
       - "COUNTRY_CONFIG_DIR=/var/www/meerkat_abacus/meerkat_abacus/country_config/"
       - "HERMES_API_ROOT=http://nginx/hermes"
       - "MAILING_KEY=password"
-      - "MEERKAT_TEST_EMAILS=0"
       - "MEERKAT_TEST_DEVICE_MESSAGES=0"
       # "MAILING_ROOT=http://nginx/reports/email/"
       - "DEVICE_MESSAGING_API=gcm"
+      - DB_DUMP
+      - IMPORT_FRACTION
+      - GET_DATA_FROM_S3=0
+      - NEW_FAKE_DATA=1
+      - MEERKAT_TEST_EMAILS
     depends_on:
       - db
       - rabbit

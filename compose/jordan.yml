@@ -12,6 +12,7 @@ services:
       - ../../meerkat_jordan/:/var/www/meerkat_jordan
       - ~/.aws/credentials:/root/.aws/credentials
       - ../../meerkat_libs/:/var/www/meerkat_libs
+      - ../.settings/dumps:/var/www/dumps
 
     environment:
       - START_CELERY=1
@@ -22,7 +23,11 @@ services:
       - COUNTRY_CONFIG=jordan_config.py
       - HERMES_API_ROOT=http://nginx/hermes
       - MAILING_ROOT=http://nginx/reports/email/s
-      - DB_DUMP=${DB_DUMP}
+      - DB_DUMP
+      - IMPORT_FRACTION
+      - GET_DATA_FROM_S3
+      - NEW_FAKE_DATA
+      - MEERKAT_TEST_EMAILS
     depends_on:
       - db
       - rabbit
@@ -163,4 +168,3 @@ services:
       - MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg
       - MEERKAT_API_URL=http://nginx/api
     hostname: consul
-
