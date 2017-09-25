@@ -821,11 +821,9 @@ def _SetDefaultsTo(gitdir):
 
 def main(orig_args):
   global extra_args
+
+  # EDIT: ensure extra_args is reset completely
   extra_args = []
-  return_flag = False
-  if '--return' in orig_args:
-      return_flag = True
-      orig_args.remove('--return')
 
   cmd, opt, args = _ParseArguments(orig_args)
 
@@ -875,13 +873,10 @@ def main(orig_args):
   me.extend(orig_args)
   me.extend(extra_args)
   try:
-    # HACK: os.execv far more reliable and cross-platform
-    # But no return after calling it, to run mk init, we need to return.
-    # Make it optional to run using os.system instead.
-    if return_flag:
-        os.system(' '.join(me))
-    else:
-        os.execv(sys.executable, me)
+    # EDIT: Use subprocess.call instead of os.execv
+    # We want to be able to run multiple REPO commands.
+    subprocess.call(' '.join(me), shell=True)
+
   except OSError as e:
     _print("fatal: unable to start %s" % repo_main, file=sys.stderr)
     _print("fatal: %s" % e, file=sys.stderr)
