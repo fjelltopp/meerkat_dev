@@ -190,20 +190,20 @@ def setup(args, extra):
     print('Setting up the Meerkat codebase...')
     print('This will destroy changes, resetting everything to the remote.')
 
-    if raw_input('ARE YOU SURE YOU WANT TO CONTINUE? (Y/n) ') is 'Y':
+    if raw_input('ARE YOU SURE YOU WANT TO CONTINUE? (y/N) ') in ['Y', 'y', 'yes', 'Yes', 'YES']:
         manifest = DEV_MANIFEST if args.all else DEMO_MANIFEST
-        repo.main(['init', '-u', MANIFEST_URL, '-m', manifest, '--return'])
-        repo.main(['sync', '--force-sync', '--return'])
+        repo.main(['init', '-u', MANIFEST_URL, '-m', manifest])
+        repo.main(['sync', '--force-sync'])
         print('Meerkat code synced')
-        repo.main(['forall', '-c', 'git', 'checkout', 'master', '--return'])
+        repo.main(['forall', '-c', 'git', 'checkout', 'master'])
         try:
             repo.main(['forall', '-c', 'git', 'checkout',
-                       '-q', 'development', '--return'])
+                       '-q', 'development'])
         except subprocess.CalledProcessError:
             print('Some repos do not have a development branch.')
 
         print('Master and Development branches created on your '
               'local machine.\nDevelopment branch checked out where '
               'available.')
-        repo.main(['status', '--return'])
+        repo.main(['status'])
         print('--SETUP COMPLETE--')
