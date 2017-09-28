@@ -181,6 +181,13 @@ def dump(args, extra):
         "\"pg_dump -U postgres -h localhost meerkat_db\" > " + filename
     ])
 
+def init(args, extra):
+    print("Initializing the Meerkat codebase...")
+    manifest = DEV_MANIFEST if args.all else DEMO_MANIFEST
+    repo.main(['init', '-u', MANIFEST_URL, '-m', manifest])
+    print("Meerkat initialized")
+    print("Meerkat status:")
+    repo.main(['status'])
 
 def setup(args, extra):
     """

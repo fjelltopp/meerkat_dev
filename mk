@@ -33,6 +33,20 @@ actions['setup'].add_argument(
 )
 actions['setup'].set_defaults(func=util.setup)
 
+actions['init'] = subparsers.add_parser(
+    'init',
+    description="Initializes Meerkat Code project and google repo.",
+    help="Configures the already existing Meerkat codebase with already checkout repositories (Google repo)."
+)
+actions['init'].set_defaults(func=util.init)
+
+actions['init'].add_argument(
+    '-a', '--all',
+    help='Initialize the complete development environment, including secure '
+         'country config repos',
+    action='store_true'
+)
+
 # Add the Google repo command arguments
 actions['sync'] = subparsers.add_parser(
     'sync',
@@ -203,7 +217,6 @@ actions['bash'] = subparsers.add_parser(
 actions['bash'].set_defaults(func=util.bash)
 actions['bash'].add_argument('container', metavar='container', type=str,
                              help='The service name e.g."frontend."')
-
 
 def main(orig_args):
     # Parse both args we recognise
