@@ -81,22 +81,12 @@ def run_docker_compose(args, extra_args):
     """
     if args.action == 'dc':
         call_command([SUDO, "docker-compose"] + extra_args)
-    if args.action == 'logs':
+    elif args.action == 'de':
+        call_command([SUDO, "docker-compose", "exec"] + extra_args)
+    elif args.action == 'logs':
         call_command([SUDO, "docker-compose", "logs", "-f"] + extra_args)
     else:
         call_command([SUDO, "docker-compose", args.action] + extra_args)
-
-
-def run_docker_exec(args, extra_args):
-    """
-    Run's a docker exec command.
-
-    Args:
-        args (NameSpace): The known args NameSpace object returned by argsparse
-        extra ([str]): A list of strings detailing any extra unkown args
-            supplied by the user
-    """
-    call_command([SUDO, "/usr/bin/docker", "exec"] + extra_args)
 
 
 def bash(args, extra_args):
