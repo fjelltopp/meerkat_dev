@@ -11,4 +11,7 @@ Get Started
    It is recommended that you create a symlink to this script from your path:
    `symlink -l /usr/local/bin/mk /home/[user]/meerkat/meerkat_dev/mk`
 5. Run the setup process `mk setup`.
+   *N.B* This will install only the demo country configs. If you have access to
+   all country configs use `--dev` option to install the complete development
+   environment.
 6. Use `mk -h` to read the script's documentation.
