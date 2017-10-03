@@ -9,7 +9,7 @@ Get Started
    `git clone git@github.com:meerkat-code/meerkat_dev.git`
 4. The development environment script `mk` is in the new meerkat_dev folder.
    It is recommended that you create a symlink to this script from your path:
-   `symlink -l /usr/local/bin/mk /home/[user]/meerkat/meerkat_dev/mk`
+   `ln -s /home/[user]/meerkat/meerkat_dev/mk /usr/local/bin/mk`
 5. Run the setup process `mk setup`.
    *N.B* This will install only the demo country configs. If you have access to
    all country configs use `--dev` option to install the complete development
