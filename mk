@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python2
 from util import dev_accounts
 import util
 import argparse
@@ -8,7 +8,7 @@ import sys
 # ARGUMENT PARSING ------------------------------------------------------------
 parser = argparse.ArgumentParser(
     description='This script provides a variety of tools for managing the '
-                'Meerkat development environment. Get started with `mk init`.'
+                'Meerkat development environment. Get started with `mk setup`.'
 )
 subparsers = parser.add_subparsers(
     title='Actions',
