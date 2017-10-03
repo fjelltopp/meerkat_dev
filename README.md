@@ -12,6 +12,6 @@ Get Started
    `ln -s /home/[user]/meerkat/meerkat_dev/mk /usr/local/bin/mk`
 5. Run the setup process `mk setup`.
    *N.B* This will install only the demo country configs. If you have access to
-   all country configs use `--dev` option to install the complete development
+   all country configs use `--all` option to install the complete development
    environment.
 6. Use `mk -h` to read the script's documentation.
