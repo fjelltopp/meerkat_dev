@@ -81,7 +81,7 @@ def run_docker_compose(args, extra_args):
     """
     if args.action == 'dc':
         call_command([SUDO, "docker-compose"] + extra_args)
-    elif args.action == 'de':
+    elif args.action == 'exec':
         call_command([SUDO, "docker-compose", "exec"] + extra_args)
     elif args.action == 'logs':
         call_command([SUDO, "docker-compose", "logs", "-f"] + extra_args)
