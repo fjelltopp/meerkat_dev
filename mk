@@ -201,12 +201,12 @@ actions['dc'] = subparsers.add_parser(
 actions['dc'].set_defaults(func=util.run_docker_compose)
 
 # Docker exec
-actions['de'] = subparsers.add_parser(
-    'de',
-    description="Run any docker exec command.",
-    help='Run any docker exec command.'
+actions['exec'] = subparsers.add_parser(
+    'exec',
+    description="Run any docker-compose exec command.",
+    help='Run any docker-compose exec command.'
 )
-actions['de'].set_defaults(func=util.run_docker_compose)
+actions['exec'].set_defaults(func=util.run_docker_compose)
 
 # Docker exec bash
 actions['bash'] = subparsers.add_parser(
