@@ -98,7 +98,7 @@ services:
       dockerfile: meerkat_dev/hermes/Dockerfile
     volumes:
       - "../../meerkat_hermes:/var/www/meerkat_hermes"
-      - ".settings/:/var/www/.settings"
+      - "../.settings/:/var/www/.settings"
       - "~/.aws/credentials:/root/.aws/credentials"
       - "../../meerkat_libs/:/var/www/meerkat_libs"
     environment:
@@ -114,7 +114,7 @@ services:
       dockerfile: meerkat_dev/auth/Dockerfile
     volumes:
       - "../../meerkat_auth/:/var/www/meerkat_auth"
-      - ".settings/:/var/www/.settings"
+      - "../.settings/:/var/www/.settings"
       - "~/.aws/credentials:/root/.aws/credentials"
       - "../../meerkat_libs/:/var/www/meerkat_libs"
     environment:
@@ -130,7 +130,7 @@ services:
       dockerfile: meerkat_dev/mob/Dockerfile
     volumes:
       - "../../meerkat_mob/:/var/www/meerkat_mob"
-      - ".settings/:/var/www/.settings"
+      - "../.settings/:/var/www/.settings"
       - "~/.aws/credentials:/root/.aws/credentials"
     environment:
       - "CONFIG_OBJECT=config.Development"

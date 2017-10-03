@@ -119,7 +119,7 @@ services:
     volumes:
       - ../../meerkat_auth/:/var/www/meerkat_auth
       - ../../meerkat_libs/:/var/www/meerkat_libs
-      - .settings/:/var/www/.settings
+      - ../.settings/:/var/www/.settings
       - ~/.aws/credentials:/root/.aws/credentials
     environment:
       - DB_URL=http://dynamodb:8000
@@ -133,7 +133,7 @@ services:
       dockerfile: meerkat_dev/hermes/Dockerfile
     volumes:
       - ../../meerkat_hermes/:/var/www/meerkat_hermes
-      - .settings/:/var/www/.settings
+      - ../.settings/:/var/www/.settings
       - ~/.aws/credentials:/root/.aws/credentials
       - ../../meerkat_libs/:/var/www/meerkat_libs
     environment:
@@ -149,7 +149,7 @@ services:
       dockerfile: meerkat_dev/mob/Dockerfile
     volumes:
       - ../../meerkat_mob/:/var/www/meerkat_mob
-      - .settings/:/var/www/.settings
+      - ../.settings/:/var/www/.settings
       - ~/.aws/credentials:/root/.aws/credentials
     environment:
       - CONFIG_OBJECT=config.Development
