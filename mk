@@ -200,7 +200,6 @@ actions['dc'] = subparsers.add_parser(
 )
 actions['dc'].set_defaults(func=util.run_docker_compose)
 
-# Docker exec
 actions['exec'] = subparsers.add_parser(
     'exec',
     description="Run any docker-compose exec command.",
@@ -217,6 +216,7 @@ actions['bash'] = subparsers.add_parser(
 actions['bash'].set_defaults(func=util.bash)
 actions['bash'].add_argument('container', metavar='container', type=str,
                              help='The service name e.g."frontend."')
+
 
 def main(orig_args):
     # Parse both args we recognise
