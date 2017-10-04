@@ -54,7 +54,7 @@ def up(args, extra_args):
         if args.db_dump and not os.path.isfile(filename):
             raise Exception("DB DUMP file does not exist.")
         else:
-            env += ['export', 'DB_DUMP=' + filename, '&&']
+            env += ['export', 'DB_DUMP=' + args.db_dump, '&&']
     if args.env:
         for var in args.env:
             env += ['export', var, '&&']
