@@ -213,7 +213,7 @@ actions['bash'] = subparsers.add_parser(
     description="Open a bash prompt in the specified container.",
     help='Open a bash prompt in the specified container'
 )
-actions['bash'].set_defaults(func=util.bash)
+actions['bash'].set_defaults(func=util.run_docker_compose)
 actions['bash'].add_argument('container', metavar='container', type=str,
                              help='The service name e.g."frontend."')
 

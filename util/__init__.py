@@ -72,7 +72,8 @@ def up(args, extra_args):
 
 def run_docker_compose(args, extra_args):
     """
-    Run's a docker compose command in the compose folder.
+    Run's a docker compose command in the compose folder. Is used for the
+    dc, exec, logs, bash, stop, restart commands.
 
     Args:
         args (NameSpace): The known args NameSpace object returned by argsparse
@@ -85,31 +86,10 @@ def run_docker_compose(args, extra_args):
         call_command([SUDO, "docker-compose", "exec"] + extra_args)
     elif args.action == 'logs':
         call_command([SUDO, "docker-compose", "logs", "-f"] + extra_args)
+    elif args.action == 'bash':
+        call_command([SUDO, "docker-compose", "exec", args.container, "bash"])
     else:
         call_command([SUDO, "docker-compose", args.action] + extra_args)
-
-
-def bash(args, extra_args):
-    """
-    Opens a bash prompt in the specified container.
-
-    Args:
-        args (NameSpace): The known args NameSpace object returned by argsparse
-        extra ([str]): A list of strings detailing any extra unkown args
-            supplied by the user
-    """
-    # Get the container prefix from the compose path and build container name
-    prefix = filter(None, COMPOSE_PATH.split("/"))[-1]
-
-    # Allow user to specify service or compleate container name
-    container = args.container
-    if prefix not in container:
-        container = ''.join([prefix, '_', args.container, "_1"])
-
-    # Run the bash command
-    call_command(
-        [SUDO, "/usr/bin/docker", "exec", "-ti", container, "bash"]
-    )
 
 
 def run_repo(args, extra):
