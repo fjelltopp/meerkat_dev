@@ -167,4 +167,7 @@ services:
     environment:
       - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
       - "MEERKAT_API_URL=http://nginx/api"
+    depends_on:
+      - auth
+      - api
     hostname: consul
