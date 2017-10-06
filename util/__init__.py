@@ -5,9 +5,14 @@ import sys
 from datetime import datetime
 
 # Some settings
-# If you run docker with sudo, set envvar DOCKER_SUDO=True
-SUDO = 'sudo' if os.environ.get('DOCKER_SUDO', False) else ''
-MANIFEST_URL = "git@github.com:meerkat-code/meerkat.git"
+# If you run docker with a sudo, set this envvar to the sudo command: 'sudo'
+SUDO = os.environ.get('MEERKAT_SUDO', '')
+# If you want to fetch containers using https, you should set this env var to
+# https://github.com/meerkat-code/meerkat.git
+MANIFEST_URL = os.environ.get(
+    'MEERKAT_MANIFEST',
+    'git@github.com:meerkat-code/meerkat.git'
+)
 DEV_MANIFEST = 'dev.xml'
 DEMO_MANIFEST = 'default.xml'
 DUMPS_PATH = (os.path.abspath(os.path.dirname(__file__)) +
