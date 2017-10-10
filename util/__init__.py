@@ -130,10 +130,10 @@ def dump(args, extra):
 
     # Get params for the filename. The country is stored in DB env variable
     time = datetime.now().strftime("%y%m%d_%H%M%S")
-    country = subprocess.check_output([
-        SUDO, "docker",  "exec", "-ti", "compose_db_1", "sh", "-c",
-        "echo \"$COUNTRY\""
-    ]).strip()
+    cmd = [SUDO] if SUDO else []
+    cmd += ["docker",  "exec", "-ti",
+            "compose_db_1", "sh", "-c", "echo \"$COUNTRY\""]
+    country = subprocess.check_output(cmd).strip()
 
     # Set the file name using the tag only if it is available.
     if args.tag:
@@ -150,11 +150,11 @@ def dump(args, extra):
 
     # Get the dump by executing pg_dump in the db container
     # Executing in container ensures same client and server version of pg_dump
-    call_command([
-        "sh", "-c",
-        "sudo docker exec -ti compose_db_1 sh -c "
-        "\"pg_dump -U postgres -h localhost meerkat_db\" > " + filename
-    ])
+    cmd = [SUDO] if SUDO else []
+    cmd += ["docker", "exec", "-ti", "compose_db_1", "sh", "-c",
+            "\"pg_dump -U postgres -h localhost meerkat_db\" > " + filename]
+    call_command(cmd)
+
 
 def init(args, extra):
     print("Initializing the Meerkat codebase...")
@@ -163,6 +163,7 @@ def init(args, extra):
     print("Meerkat initialized")
     print("Meerkat status:")
     repo.main(['status'])
+
 
 def setup(args, extra):
     """
