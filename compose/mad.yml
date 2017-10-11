@@ -12,7 +12,7 @@ services:
       - "../.settings/:/var/www/.settings"
       - "../../meerkat_libs/:/var/www/meerkat_libs"
     environment:
-      - "CONFIG_OBJECT=config.Development"
+      - "CONFIG_OBJECT=meerkat_hermes.config.Development"
       - "DB_URL=http://dynamodb:8000"
       - "MEERKAT_HERMES_SETTINGS=/var/www/meerkat_hermes/secret.cfg"
       - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"

@@ -138,7 +138,7 @@ services:
       - ~/.aws/credentials:/root/.aws/credentials
       - ../../meerkat_libs/:/var/www/meerkat_libs
     environment:
-      - CONFIG_OBJECT=config.Development
+      - CONFIG_OBJECT=meerkat_hermes.config.Development
       - MEERKAT_HERMES_SETTINGS=/var/www/meerkat_hermes/secret.cfg
       - MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg
       - DB_URL=http://dynamodb:8000
