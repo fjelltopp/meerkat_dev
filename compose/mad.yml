@@ -170,6 +170,7 @@ services:
       - "../../meerkat_frontend/:/var/www/meerkat_frontend"
       - "../../meerkat_docs/:/var/www/meerkat_docs"
       - "../../meerkat_api/api_background/api_background/exported_data:/var/www/meerkat_api/api_background/api_background/exported_data"
+      - "../../meerkat_dev/nginx/config/nginx.conf:/etc/nginx/nginx.conf"
 
     depends_on:
       - api
