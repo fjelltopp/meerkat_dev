@@ -19,10 +19,21 @@ RUN curl -LO https://repo.continuum.io/miniconda/${MINICONDA_PACKAGE} &&\
     conda install -y pandas
 
 RUN mkdir -p /var/www/meerkat_runner
-WORKDIR /var/www/meerkat_runner
+WORKDIR /var/www
 
-COPY meerkat_runner/requirements.txt /var/www/meerkat_runner/requirements.txt
-RUN pip install -r requirements.txt
+# Install pip requirements. Add requirements list to bust-cache if any changes.
+ADD meerkat_libs/requirements.txt libs_req.tmp
+RUN pip install -r libs_req.tmp
+
+ADD meerkat_api/api_background/requirements.txt api_req.tmp
+RUN pip install -r api_req.tmp
+
+ADD meerkat_runner/requirements.txt runner_req.tmp
+RUN pip install -r runner_req.tmp
+
+ADD meerkat_abacus/requirements.txt abacus_req.tmp
+RUN pip install -r abacus_req.tmp &&\
+    rm *_req.tmp
 
 COPY meerkat_dev/runner/start_celery /usr/bin/start_celery
 WORKDIR /var/www/meerkat_runner
