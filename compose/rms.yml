@@ -50,7 +50,7 @@ services:
       - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
       - "COUNTRY_CONFIG_DIR=/var/www/meerkat_rms/abacus/"
       - "COUNTRY_CONFIG=rms_config.py"
-      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
     hostname: api
 
   frontend:
@@ -75,7 +75,7 @@ services:
       - "MAPBOX_MAP_ID=mrjb.143811c9"
       - "MAPBOX_API_ACCESS_TOKEN=pk.eyJ1IjoibXJqYiIsImEiOiJqTXVObHJZIn0.KQCTcMow5165oToazo4diQ"
       - "MAPBOX_STATIC_MAP_API_URL=https://api.mapbox.com/v4/"
-      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
     hostname: frontend
 
   nginx:
@@ -124,7 +124,7 @@ services:
       - "../.settings/:/var/www/.settings"
     environment:
       - "DB_URL=http://dynamodb:8000"
-      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
       - "MEERKAT_AUTH_ROOT=/auth"
     hostname: auth
 
@@ -141,7 +141,7 @@ services:
       - "CONFIG_OBJECT=meerkat_hermes.config.Development"
       - "DB_URL=http://dynamodb:8000"
       - "MEERKAT_HERMES_SETTINGS=/var/www/meerkat_hermes/secret.cfg"
-      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
     hostname: hermes
 
   mob:
@@ -166,7 +166,7 @@ services:
       - "../../meerkat_consul/:/var/www/meerkat_consul"
       - "../../meerkat_libs/:/var/www/meerkat_libs"
     environment:
-      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
       - "MEERKAT_API_URL=http://nginx/api"
     depends_on:
       - auth

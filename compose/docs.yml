@@ -18,4 +18,4 @@ services:
     environment:
       - "MEERKAT_FRONTEND_SETTINGS=/var/www/meerkat_frontend/country_config/null_config.py"
       - "MEERKAT_HERMES_SETTINGS=/var/www/meerkat_hermes/config.py"
-      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/sample_auth.cfg"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
