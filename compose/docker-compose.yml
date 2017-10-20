@@ -43,10 +43,12 @@ services:
       - IMPORT_FRACTION
       - GET_DATA_FROM_S3=0
       - MEERKAT_TEST_EMAILS
+
+      - "AGGREGATE_USERNAME=test"
+      - "AGGERGATE_PASSWORD=aggregate"
       - "AGGREGATE_URL=http://democountryserver.emro.info"
-      - "FAKE_DATA_GENERATION=INTERNAL"
-      - "INITIAL_DATA_SOURCE=FAKE_DATA"
-      - "STREAM_DATA_SOURCE=AWS_S3"
+      - "INTERNAL_FAKE_DATA=1"
+      - "FAKE_DATA_INTERVAL=300"
       - "PERSISTENT_DATABASE_URL=postgresql+psycopg2://postgres:postgres@db/persistent_demo_db"
     depends_on:
       - db
@@ -55,6 +57,7 @@ services:
     hostname: abacus
 
   runner:
+
     build:
       context: ../../
       dockerfile: meerkat_dev/runner/Dockerfile
