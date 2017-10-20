@@ -43,11 +43,34 @@ services:
       - GET_DATA_FROM_S3
       - NEW_FAKE_DATA
       - MEERKAT_TEST_EMAILS
+      - "INITIAL_DATA_SOURCE=S3"
+      - "STREAM_DATA_SOURCE=AWS_S3"
+
     depends_on:
       - db
       - rabbit
     hostname: abacus
 
+  runner:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/runner/Dockerfile
+    volumes:
+      - "../../meerkat_abacus/:/var/www/meerkat_abacus"
+      - "../../meerkat_runner/:/var/www/meerkat_runner"
+      - "../../meerkat_api/:/var/www/meerkat_api"
+      - "../../meerkat_frontend/:/var/www/meerkat_frontend"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
+      - "~/.aws/credentials:/root/.aws/credentials"
+    environment:
+      - "START_CELERY=1"
+      - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
+      - "COUNTRY_CONFIG_DIR=/var/www/meerkat_abacus/meerkat_abacus/country_config/"
+    depends_on:
+      - db
+      - rabbit
+    hostname: runner
+ 
   api:
     build:
       context: ../../

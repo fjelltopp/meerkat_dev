@@ -1,0 +1,18 @@
+#!/bin/bash
+cd /var/www/meerkat_api/api_background
+pip install -I --no-deps -e .
+
+cd /var/www/meerkat_libs
+pip install -I --no-deps -e .
+
+cd /var/www/meerkat_libs
+pip install --no-deps -e . 
+
+cd /var/www/meerkat_abacus
+pip install -I --no-deps -e .
+
+cd /var/www/meerkat_runner
+
+export C_FORCE_ROOT="true"
+
+celery -A  meerkat_runner.celery.app worker -l info --concurrency 2
