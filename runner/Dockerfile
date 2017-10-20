@@ -35,6 +35,12 @@ ADD meerkat_abacus/requirements.txt abacus_req.tmp
 RUN pip install -r abacus_req.tmp &&\
     rm *_req.tmp
 
+WORKDIR /var/www/meerkat_runner
+
+COPY meerkat_runner/requirements.txt /var/www/meerkat_runner/requirements.txt
+RUN pip install -r requirements.txt
+
+
 COPY meerkat_dev/runner/start_celery /usr/bin/start_celery
 WORKDIR /var/www/meerkat_runner
 CMD ["start_celery"]
