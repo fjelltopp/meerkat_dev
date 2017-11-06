@@ -1,8 +1,10 @@
-import repo
-import subprocess
 import os
+import subprocess
 import sys
 from datetime import datetime
+
+import repo
+from util.dummy_aws_credentials import create_dummy_aws_config
 
 # Some settings
 # If you run docker with a sudo, set this envvar to the sudo command: 'sudo'
@@ -33,9 +35,9 @@ def call_command(args):
             cwd=COMPOSE_PATH
         )
         if retcode is not 0:
-            print >>sys.stderr, "Command not successful. Returned", retcode
+            print >> sys.stderr, "Command not successful. Returned", retcode
     except OSError as e:
-        print >>sys.stderr, "Execution failed:", e
+        print >> sys.stderr, "Execution failed:", e
 
 
 def up(args, extra_args):
@@ -131,7 +133,7 @@ def dump(args, extra):
     # Get params for the filename. The country is stored in DB env variable
     time = datetime.now().strftime("%y%m%d_%H%M%S")
     cmd = [SUDO] if SUDO else []
-    cmd += ["docker",  "exec", "-ti",
+    cmd += ["docker", "exec", "-ti",
             "compose_db_1", "sh", "-c", "echo \"$COUNTRY\""]
     country = subprocess.check_output(cmd).strip()
 
@@ -174,6 +176,7 @@ def setup(args, extra):
     print('This will destroy changes, resetting everything to the remote.')
 
     if raw_input('ARE YOU SURE YOU WANT TO CONTINUE? (y/N) ') in ['Y', 'y', 'yes', 'Yes', 'YES']:
+        create_dummy_aws_config()
         manifest = DEV_MANIFEST if args.all else DEMO_MANIFEST
         repo.main(['init', '-u', MANIFEST_URL, '-m', manifest])
         repo.main(['sync', '--force-sync'])
