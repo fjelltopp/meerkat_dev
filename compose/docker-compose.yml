@@ -48,7 +48,7 @@ services:
       - "AGGREGATE_URL=http://democountryserver.emro.info"
       - "FAKE_DATA_GENERATION=INTERNAL"
       - "INITIAL_DATA_SOURCE=LOCAL_RDS"
-      - "STREAM_DATA_SOURCE=AWS_S3"
+      - "STREAM_DATA_SOURCE=None"
       - "PERSISTENT_DATABASE_URL=postgresql+psycopg2://postgres:postgres@db/persistent_demo_db"
     depends_on:
       - db
