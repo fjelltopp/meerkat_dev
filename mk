@@ -186,6 +186,13 @@ actions['restart'] = subparsers.add_parser(
 )
 actions['restart'].set_defaults(func=util.run_docker_compose)
 
+actions['build'] = subparsers.add_parser(
+    'build',
+    description="Restart docker containers (docker-compose).",
+    help="Restart docker containers (docker-compose)."
+)
+actions['build'].set_defaults(func=util.run_docker_compose)
+
 actions['logs'] = subparsers.add_parser(
     'logs',
     description="Open the logs for a service (docker-compose)",
