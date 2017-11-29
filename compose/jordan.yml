@@ -123,6 +123,9 @@ services:
         - COUNTRY=jordan
     ports:
       - 5432:5432
+    volumes:
+      - "../db/postgresql.conf/:/etc/postgresql.conf"
+    command: postgres -c config_file=/etc/postgresql.conf
 
   dynamodb:
     image: peopleperhour/dynamodb
