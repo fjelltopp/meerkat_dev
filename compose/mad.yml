@@ -39,13 +39,11 @@ services:
       - "HERMES_API_ROOT=http://nginx/hermes"
       - "MAILING_KEY=password"
       - "MAILING_ROOT=http://nginx/reports/email/"
-      - GET_DATA_FROM_S3
-      - NEW_FAKE_DATA
       - DB_DUMP
       - MEERKAT_TEST_EMAILS
       - IMPORT_FRACTION
-      - "INITIAL_DATA_SOURCE=AWS_S3"
-      - "STREAM_DATA_SOURCE=AWS_S3"
+      - INITIAL_DATA_SOURCE
+      - STREAM_DATA_SOURCE
     depends_on:
       - db
       - rabbit

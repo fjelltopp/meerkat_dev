@@ -41,11 +41,9 @@ services:
       - "MAILING_ROOT=http://nginx/reports/email/"
       - DB_DUMP
       - IMPORT_FRACTION
-      - GET_DATA_FROM_S3
-      - NEW_FAKE_DATA
       - MEERKAT_TEST_EMAILS
-      - "INITIAL_DATA_SOURCE=AWS_S3"
-      - "STREAM_DATA_SOURCE=AWS_S3"
+      - INITIAL_DATA_SOURCE
+      - STREAM_DATA_SOURCE
 
     depends_on:
       - db

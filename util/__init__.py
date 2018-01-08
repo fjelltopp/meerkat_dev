@@ -52,8 +52,8 @@ def up(args, extra_args):
     # Export environment variables for dev_env options.
     env = []
     if args.fake_data:
-        env += ['export', 'NEW_FAKE_DATA=1', '&&']
-        env += ['export', 'GET_DATA_FROM_S3=0', '&&']
+        env += ['export', 'INITIAL_DATA_SOURCE=FAKE_DATA', '&&']
+        env += ['export', 'STREAM_DATA_SOURCE=NO_STREAMING', '&&']
     if args.data_fraction:
         env += ['export', 'IMPORT_FRACTION=' + args.data_fraction, '&&']
     if args.db_dump:
