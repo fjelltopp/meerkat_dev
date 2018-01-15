@@ -71,7 +71,7 @@ services:
       - db
       - rabbit
     hostname: runner
- 
+
   api:
     build:
       context: ../../

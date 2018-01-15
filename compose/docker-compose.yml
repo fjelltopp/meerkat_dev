@@ -105,6 +105,7 @@ services:
       - "../../meerkat_frontend/:/var/www/meerkat_frontend"
       - "../../meerkat_api/:/var/www/meerkat_api"
       - "../../meerkat_libs/:/var/www/meerkat_libs"
+      - "~/.aws/credentials:/root/.aws/credentials"
     environment:
       - "HERMES_API_KEY=test-hermes"
       - "HERMES_DEV=1"

@@ -83,6 +83,7 @@ services:
       - ../../meerkat_frontend/:/var/www/meerkat_frontend
       - ../../meerkat_jordan/:/var/www/meerkat_jordan
       - ../../meerkat_libs/:/var/www/meerkat_libs
+      - "~/.aws/credentials:/root/.aws/credentials"
     environment:
       - MEERKAT_FRONTEND_SETTINGS=/var/www/meerkat_jordan/frontend/jordan_config.py
       - HERMES_API_KEY=test-hermes

@@ -70,7 +70,7 @@ services:
       - db
       - rabbit
     hostname: runner
- 
+
 
   api:
     build:
@@ -102,6 +102,7 @@ services:
       - "../../meerkat_mad/:/var/www/meerkat_mad"
       - "../../meerkat_api/:/var/www/meerkat_api"
       - "../../meerkat_libs/:/var/www/meerkat_libs"
+      - "~/.aws/credentials:/root/.aws/credentials"
     environment:
       - "MEERKAT_FRONTEND_SETTINGS=/var/www/meerkat_mad/frontend/mad_config.py"
       - "COUNTRY_FOLDER=/var/www/meerkat_mad"
