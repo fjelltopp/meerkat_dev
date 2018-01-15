@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.6.2
 
 # Install global requirements
 ENV PYTHONPATH=/var/www/meerkat_libs

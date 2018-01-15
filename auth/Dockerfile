@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.6.2
 
 RUN apt-get update &&\
     wget -qO- https://deb.nodesource.com/setup_6.x | bash - &&\
