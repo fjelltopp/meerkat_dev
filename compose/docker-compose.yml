@@ -121,6 +121,7 @@ services:
       - "MAPBOX_STATIC_MAP_API_URL=https://api.mapbox.com/v4/"
       - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
       - "LOGGING_URL=http://nginx/logging"
+      - "DYNAMODB_URL=http://dynamodb:8000"
     hostname: frontend
 
   hermes:
