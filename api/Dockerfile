@@ -13,12 +13,12 @@ RUN apt-get update &&\
 ENV PATH=/miniconda/bin:${PATH}
 ENV PYTHONPATH=/miniconda/lib/${PYT_VERSION}/site-packages
 
-RUN curl -LO https://repo.continuum.io/miniconda/${MINICONDA_PACKAGE}
-RUN bash ${MINICONDA_PACKAGE} -p /miniconda -b
-RUN rm ${MINICONDA_PACKAGE}
-RUN conda update -y conda
-RUN conda install -y pandas
-RUN pip install uwsgi
+RUN curl -LO https://repo.continuum.io/miniconda/${MINICONDA_PACKAGE} &&\
+    bash ${MINICONDA_PACKAGE} -p /miniconda -b &&\
+    rm ${MINICONDA_PACKAGE} &&\
+    conda update -y conda &&\
+    conda install -y pandas &&\
+    pip install uwsgi
 
 RUN mkdir -p /var/www/meerkat_api
 WORKDIR /var/www
