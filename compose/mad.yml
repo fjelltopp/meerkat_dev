@@ -42,6 +42,7 @@ services:
       - DB_DUMP
       - MEERKAT_TEST_EMAILS
       - IMPORT_FRACTION
+      - ONLY_IMPORT_AFTER
       - INITIAL_DATA_SOURCE
       - STREAM_DATA_SOURCE
     depends_on:

@@ -44,6 +44,7 @@ services:
       - "DEVICE_MESSAGING_API=gcm"
       - DB_DUMP
       - IMPORT_FRACTION
+      - ONLY_IMPORT_AFTER
       - GET_DATA_FROM_S3=0
       - MEERKAT_TEST_EMAILS
       - "AGGREGATE_USERNAME=test"

@@ -40,6 +40,7 @@ services:
       - "MAILING_ROOT=http://nginx/reports/email/"
       - DB_DUMP
       - IMPORT_FRACTION
+      - ONLY_IMPORT_AFTER
       - GET_DATA_FROM_S3
       - NEW_FAKE_DATA
       - MEERKAT_TEST_EMAILS

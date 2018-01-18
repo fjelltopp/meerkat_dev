@@ -26,6 +26,7 @@ services:
       - DB_DUMP
       - IMPORT_FRACTION
       - MEERKAT_TEST_EMAILS
+      - ONLY_IMPORT_AFTER
       - INITIAL_DATA_SOURCE
       - STREAM_DATA_SOURCE
 

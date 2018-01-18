@@ -26,6 +26,7 @@ services:
       - IMPORT_FRACTION
       - MEERKAT_TEST_EMAILS
       - INITIAL_DATA_SOURCE
+      - ONLY_IMPORT_AFTER
       - STREAM_DATA_SOURCE
     depends_on:
       - db
