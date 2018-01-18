@@ -46,6 +46,7 @@ services:
       - IMPORT_FRACTION
       - GET_DATA_FROM_S3=0
       - MEERKAT_TEST_EMAILS
+      - ONLY_IMPORT_AFTER
       - "AGGREGATE_USERNAME=test"
       - "AGGERGATE_PASSWORD=aggregate"
       - "AGGREGATE_URL=http://democountryserver.emro.info"

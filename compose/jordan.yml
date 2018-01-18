@@ -28,6 +28,7 @@ services:
       - MEERKAT_TEST_EMAILS
       - INITIAL_DATA_SOURCE
       - STREAM_DATA_SOURCE
+      - ONLY_IMPORT_AFTER
 
     depends_on:
       - db
