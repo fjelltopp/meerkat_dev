@@ -54,6 +54,8 @@ def up(args, extra_args):
     if args.fake_data:
         env += ['export', 'INITIAL_DATA_SOURCE=FAKE_DATA', '&&']
         env += ['export', 'STREAM_DATA_SOURCE=NO_STREAMING', '&&']
+    if args.start_date:
+        env += ['export', 'ONLY_IMPORT_AFTER=' + args.start_date, "&&"]
     if args.data_fraction:
         env += ['export', 'IMPORT_FRACTION=' + args.data_fraction, '&&']
     if args.db_dump:

@@ -167,6 +167,10 @@ actions['up'].add_argument(
     help='Use the specified fraction of the real data.',
 )
 actions['up'].add_argument(
+    '-sd', '--start-date',
+    help='Only import data after the given start date.',
+)
+actions['up'].add_argument(
     '-e', '--env',
     help='Specify an Env Variable e.g. -e ENV_VAR=value ',
     action='append'
