@@ -44,7 +44,6 @@ services:
       - ONLY_IMPORT_AFTER
       - INITIAL_DATA_SOURCE
       - STREAM_DATA_SOURCE
-      - ONLY_IMPORT_AFTER
     depends_on:
       - db
       - rabbit
