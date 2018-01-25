@@ -154,21 +154,26 @@ actions['up'].add_argument(
     nargs='?'
 )
 actions['up'].add_argument(
-    '-db', '--db-dump',
+    '-d', '--db-dump',
     help='Use a db dump.',
 )
 actions['up'].add_argument(
-    '-fd', '--fake-data',
+    '-f', '--fake-data',
     help='Use fake data instead of real data.',
     action='store_true'
 )
 actions['up'].add_argument(
-    '-f', '--data-fraction',
+    '-p', '--data-proportion',
     help='Use the specified fraction of the real data.',
 )
 actions['up'].add_argument(
-    '-sd', '--start-date',
+    '-s', '--start-date',
     help='Only import data after the given start date.',
+)
+actions['up'].add_argument(
+    '-r', '--real-time',
+    help='Emulate the real time pipeline using fake data.',
+    action='store_true'
 )
 actions['up'].add_argument(
     '-e', '--env',

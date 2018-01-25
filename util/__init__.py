@@ -54,10 +54,14 @@ def up(args, extra_args):
     if args.fake_data:
         env += ['export', 'INITIAL_DATA_SOURCE=FAKE_DATA', '&&']
         env += ['export', 'STREAM_DATA_SOURCE=NO_STREAMING', '&&']
+    if args.real_time:
+        env += ['export', 'INITIAL_DATA_SOURCE=AWS_S3', '&&']
+        env += ['export', 'FAKE_DATA_GENERATION=INTERNAL', '&&']
+        env += ['export', 'STREAM_DATA_SOURCE=NO_STREAMING', '&&']
     if args.start_date:
         env += ['export', 'ONLY_IMPORT_AFTER=' + args.start_date, "&&"]
-    if args.data_fraction:
-        env += ['export', 'IMPORT_FRACTION=' + args.data_fraction, '&&']
+    if args.data_proportion:
+        env += ['export', 'IMPORT_FRACTION=' + args.data_proportion, '&&']
     if args.db_dump:
         filename = DUMPS_PATH + args.db_dump
         if args.db_dump and not os.path.isfile(filename):
