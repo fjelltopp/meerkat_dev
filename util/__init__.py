@@ -54,7 +54,7 @@ def up(args, extra_args):
     if args.fake_data:
         env += ['export', 'INITIAL_DATA_SOURCE=FAKE_DATA', '&&']
         env += ['export', 'STREAM_DATA_SOURCE=NO_STREAMING', '&&']
-    if args.real_time:
+    if args.fake_real_time:
         env += ['export', 'INITIAL_DATA_SOURCE=AWS_S3', '&&']
         env += ['export', 'FAKE_DATA_GENERATION=INTERNAL', '&&']
         env += ['export', 'STREAM_DATA_SOURCE=NO_STREAMING', '&&']

@@ -171,7 +171,7 @@ actions['up'].add_argument(
     help='Only import data after the given start date.',
 )
 actions['up'].add_argument(
-    '-r', '--real-time',
+    '-r', '--fake-real-time',
     help='Emulate the real time pipeline using fake data.',
     action='store_true'
 )
