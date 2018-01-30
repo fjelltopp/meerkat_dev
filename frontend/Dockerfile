@@ -7,7 +7,7 @@ RUN apt-get update &&\
     apt-get install -y nodejs gettext ghostscript &&\
     apt-get clean &&\
     pip3 install uwsgi
-RUN npm install -g bower gulp yarn
+RUN npm install -g bower gulp-cli yarn
 WORKDIR /var/www
 
 # Install pip requirements. Add requirements list to bust-cache if any changes.
