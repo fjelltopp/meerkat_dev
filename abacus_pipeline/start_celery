@@ -1,0 +1,5 @@
+#!/bin/bash
+cd meerkat_abacus
+
+celery -A  meerkat_abacus.pipeline_worker.celery_app.app worker -l info --concurrency 2
+

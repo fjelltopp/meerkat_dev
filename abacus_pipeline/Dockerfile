@@ -24,15 +24,13 @@ WORKDIR /var/www
 ADD meerkat_libs/requirements.txt libs_req.tmp
 RUN pip install -r libs_req.tmp
 
-ADD meerkat_api/api_background/requirements.txt api_req.tmp
-RUN pip install -r api_req.tmp
-
 ADD meerkat_abacus/requirements.txt abacus_req.tmp
 RUN pip install -r abacus_req.tmp &&\
     rm *_req.tmp
 
 ENV PYTHONPATH /miniconda/lib/{PYT_VERSION}/site-packages:/var/www/meerkat_libs:/var/www/meerkat_api/api_background:/var/www/meerkat_abacus
 WORKDIR /var/www/meerkat_abacus
-ADD meerkat_dev/abacus/start_celery /usr/bin/start_celery
+
+ADD meerkat_dev/abacus_pipeline/start_celery /usr/bin/start_celery
 
 CMD ["start_celery"]
