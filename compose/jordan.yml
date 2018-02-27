@@ -22,13 +22,15 @@ services:
       - COUNTRY_CONFIG_DIR=/var/www/meerkat_jordan/abacus/
       - COUNTRY_CONFIG=jordan_config.py
       - HERMES_API_ROOT=http://nginx/hermes
-      - MAILING_ROOT=http://nginx/reports/email/s
+      - MAILING_ROOT=http://nginx/reports/email/
+      - SQS_QUEUE=nest-queue-jordan
       - DB_DUMP
       - IMPORT_FRACTION
       - MEERKAT_TEST_EMAILS
       - ONLY_IMPORT_AFTER
-      - INITIAL_DATA_SOURCE
-      - STREAM_DATA_SOURCE
+      - INITIAL_DATA_SOURCE=FAKE_DATA
+      - STREAM_DATA_SOURCE=LOCAL_SQS
+      - FAKE_DATA_GENERATION=SEND_TO_AGGREGATE
 
     depends_on:
       - db
@@ -122,6 +124,7 @@ services:
     hostname: db
     environment:
         - COUNTRY=jordan
+        - POSTGRES_PASSWORD=postgres
     ports:
       - 5432:5432
     volumes:
