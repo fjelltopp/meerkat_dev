@@ -9,6 +9,7 @@ services:
       - "5432:5432"
     volumes:
       - "../db/postgresql.conf/:/etc/postgresql.conf"
+      - "../db/data:/var/lib/postgresql/data"
     command: postgres -c config_file=/etc/postgresql.conf
 
   dynamodb:
@@ -48,10 +49,10 @@ services:
       - MEERKAT_TEST_EMAILS
       - ONLY_IMPORT_AFTER
       - "AGGREGATE_USERNAME=test"
-      - "AGGERGATE_PASSWORD=aggregate"
+      - "AGGREGATE_PASSWORD=aggregate"
       - "AGGREGATE_URL=http://democountryserver.emro.info"
       - "FAKE_DATA_GENERATION=INTERNAL"
-      - "INITIAL_DATA_SOURCE=LOCAL_RDS"
+      - "INITIAL_DATA_SOURCE=FAKE_DATA"
       - "STREAM_DATA_SOURCE=NO_STREAMING"
       - "PERSISTENT_DATABASE_URL=postgresql+psycopg2://postgres:postgres@db/persistent_demo_db"
     depends_on:

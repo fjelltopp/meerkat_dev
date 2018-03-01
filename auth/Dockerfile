@@ -2,7 +2,7 @@ FROM python:3.6.2
 
 RUN apt-get update &&\
     wget -qO- https://deb.nodesource.com/setup_6.x | bash - &&\
-    apt-get install -y nodejs gettext &&\
+    apt-get -y install nodejs gettext &&\
     apt-get clean &&\
     npm install -g bower gulp yarn &&\
     pip3 install uwsgi
