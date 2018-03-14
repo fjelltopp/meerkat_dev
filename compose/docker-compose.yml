@@ -32,28 +32,27 @@ services:
       - "../../meerkat_libs/:/var/www/meerkat_libs"
       - "../abacus/dumps/:/var/www/dumps"
     environment:
-      - "START_CELERY=1"
-      - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
-      - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
-      - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
-      - "COUNTRY_CONFIG_DIR=/var/www/meerkat_abacus/meerkat_abacus/country_config/"
-      - "HERMES_API_ROOT=http://nginx/hermes"
-      - "MAILING_KEY=password"
-      - "MEERKAT_TEST_DEVICE_MESSAGES=0"
-      # "MAILING_ROOT=http://nginx/reports/email/"
-      - "DEVICE_MESSAGING_API=gcm"
+      - START_CELERY=1
+      - DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/
+      - MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db
+      - MEERKAT_BROKER_URL=amqp://guest@rabbit//
+      - COUNTRY_CONFIG_DIR=/var/www/meerkat_abacus/meerkat_abacus/country_config/
+      - HERMES_API_ROOT=http://nginx/hermes
+      - MAILING_KEY=password
+      - MEERKAT_TEST_DEVICE_MESSAGES=0
+      - DEVICE_MESSAGING_API=gcm
       - DB_DUMP
       - IMPORT_FRACTION
       - GET_DATA_FROM_S3=0
       - MEERKAT_TEST_EMAILS
       - ONLY_IMPORT_AFTER
-      - "AGGREGATE_USERNAME=test"
-      - "AGGERGATE_PASSWORD=aggregate"
-      - "AGGREGATE_URL=http://democountryserver.emro.info"
-      - "FAKE_DATA_GENERATION=INTERNAL"
-      - "INITIAL_DATA_SOURCE=LOCAL_RDS"
-      - "STREAM_DATA_SOURCE=NO_STREAMING"
-      - "PERSISTENT_DATABASE_URL=postgresql+psycopg2://postgres:postgres@db/persistent_demo_db"
+      - AGGREGATE_USERNAME=test
+      - AGGERGATE_PASSWORD=aggregate
+      - AGGREGATE_URL=http://democountryserver.emro.info
+      - FAKE_DATA_GENERATION=INTERNAL
+      - INITIAL_DATA_SOURCE=FAKE_DATA
+      - STREAM_DATA_SOURCE=NO_STREAMING
+      - PERSISTENT_DATABASE_URL=postgresql+psycopg2://postgres:postgres@db/persistent_demo_db
     depends_on:
       - db
       - rabbit
