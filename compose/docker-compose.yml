@@ -18,7 +18,11 @@ services:
       - "8000:8000"
 
   rabbit:
-    image: rabbitmq
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/rabbit/Dockerfile
+    ports:
+      - "15672:15672"
     hostname: rabbit
 
   abacus_pipeline:
@@ -110,6 +114,23 @@ services:
       - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
       - "LOGGING_URL=http://nginx/logging"
     hostname: api
+  # api_background:
+  #   build:
+  #     context: ../../
+  #     dockerfile: meerkat_dev/api_background/Dockerfile
+  #   volumes:
+  #     - "../../meerkat_abacus/:/var/www/meerkat_abacus"
+  #     - "../../meerkat_analysis/:/var/www/meerkat_analysis"
+  #     - "../../meerkat_api/:/var/www/meerkat_api"
+  #     - "../../meerkat_libs/:/var/www/meerkat_libs"
+  #   environment:
+  #     - "MEERKAT_API_SETTINGS=/var/www/meerkat_api/country_config/null_config.py"
+  #     - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
+  #     - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
+  #     - "COUNTRY_CONFIG_DIR=/var/www/meerkat_abacus/meerkat_abacus/country_config/"
+  #     - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
+  #     - "LOGGING_URL=http://nginx/logging"
+  #   hostname: api
 
   frontend:
     build:
