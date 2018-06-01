@@ -58,6 +58,9 @@ def up(args, extra_args):
         env += ['export', 'INITIAL_DATA_SOURCE=AWS_S3', '&&']
         env += ['export', 'FAKE_DATA_GENERATION=INTERNAL', '&&']
         env += ['export', 'STREAM_DATA_SOURCE=NO_STREAMING', '&&']
+    if args.csv:
+        env += ['export', 'INITIAL_DATA_SOURCE=LOCAL_CSV', '&&']
+        env += ['export', 'STREAM_DATA_SOURCE=NO_STREAMING', '&&']
     if args.start_date:
         env += ['export', 'ONLY_IMPORT_AFTER=' + args.start_date, "&&"]
     if args.data_proportion:

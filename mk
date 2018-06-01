@@ -171,6 +171,11 @@ actions['up'].add_argument(
     help='Only import data after the given start date.',
 )
 actions['up'].add_argument(
+    '-c', '--csv',
+    help='Don\'t generate any new data, use data from local csv.',
+	action='store_true'
+)
+actions['up'].add_argument(
     '-r', '--fake-real-time',
     help='Emulate the real time pipeline using fake data.',
     action='store_true'
@@ -187,6 +192,13 @@ actions['stop'] = subparsers.add_parser(
     help="Stop docker containers (docker-compose)."
 )
 actions['stop'].set_defaults(func=util.run_docker_compose)
+
+actions['down'] = subparsers.add_parser(
+    'down',
+    description="Stop and destroy docker containers (docker-compose).",
+    help="Stop and destroy docker containers (docker-compose)."
+)
+actions['down'].set_defaults(func=util.run_docker_compose)
 
 actions['restart'] = subparsers.add_parser(
     'restart',
