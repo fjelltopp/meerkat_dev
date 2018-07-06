@@ -13,7 +13,7 @@ SUDO = os.environ.get('MEERKAT_SUDO', '')
 # https://github.com/meerkat-code/meerkat.git
 MANIFEST_URL = os.environ.get(
     'MEERKAT_MANIFEST',
-    'git@github.com:meerkat-code/meerkat.git'
+    'git@github.com:fjelltopp/meerkat.git'
 )
 DEV_MANIFEST = 'dev.xml'
 DEMO_MANIFEST = 'default.xml'
