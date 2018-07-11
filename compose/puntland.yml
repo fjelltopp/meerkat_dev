@@ -172,10 +172,12 @@ services:
       dockerfile: meerkat_dev/consul/Dockerfile
     volumes:
       - "../../meerkat_consul/:/var/www/meerkat_consul"
+      - "../../meerkat_puntland/:/var/www/meerkat_puntland"
       - "../../meerkat_libs/:/var/www/meerkat_libs"
     environment:
       - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
       - "MEERKAT_API_URL=http://nginx/api"
+      - "MEERKAT_CONSUL_SETTINGS=/var/www/meerkat_puntland/consul/puntland_config.py"
     depends_on:
       - auth
       - api
