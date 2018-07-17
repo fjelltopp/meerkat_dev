@@ -36,14 +36,15 @@ services:
       - "HERMES_DEV=1"
       - "HERMES_API_KEY=test-hermes"
       - "HERMES_API_ROOT=http://nginx/hermes"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
       - "MAILING_KEY=password"
       - "MAILING_ROOT=http://nginx/reports/email/"
       - DB_DUMP
       - IMPORT_FRACTION
       - MEERKAT_TEST_EMAILS
       - ONLY_IMPORT_AFTER
-      - INITIAL_DATA_SOURCE
-      - STREAM_DATA_SOURCE
+      - "INITIAL_DATA_SOURCE"
+      - "STREAM_DATA_SOURCE"
     depends_on:
       - db
       - rabbit
@@ -61,6 +62,7 @@ services:
       - "../../meerkat_puntland/:/var/www/meerkat_puntland"
       - "~/.aws/credentials:/root/.aws/credentials"
     environment:
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
       - "START_CELERY=1"
       - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
     depends_on:
