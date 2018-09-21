@@ -18,17 +18,17 @@ services:
       - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
     hostname: hermes
 
-  abacus:
+  abacus_pipeline:
     build:
       context: ../../
-      dockerfile: meerkat_dev/abacus/Dockerfile
+      dockerfile: meerkat_dev/abacus_pipeline/Dockerfile
     volumes:
       - "../../meerkat_abacus/:/var/www/meerkat_abacus"
       - "../../meerkat_api/:/var/www/meerkat_api"
-
-      - "../../meerkat_mad/:/var/www/meerkat_mad"
-      - "~/.aws/credentials:/root/.aws/credentials"
+      - "../../meerkat_frontend/:/var/www/meerkat_frontend"
       - "../../meerkat_libs/:/var/www/meerkat_libs"
+      - "../abacus/dumps/:/var/www/dumps"
+      - "../../meerkat_mad/:/var/www/meerkat_mad"
     environment:
       - "START_CELERY=1"
       - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
@@ -37,39 +37,46 @@ services:
       - "COUNTRY_CONFIG_DIR=/var/www/meerkat_mad/abacus/"
       - "COUNTRY_CONFIG=mad_config.py"
       - "HERMES_API_ROOT=http://nginx/hermes"
-      - "MAILING_KEY=password"
-      - "MAILING_ROOT=http://nginx/reports/email/"
-      - DB_DUMP
-      - MEERKAT_TEST_EMAILS
+      - DEVELOPMENT=1
       - IMPORT_FRACTION
       - ONLY_IMPORT_AFTER
-      - INITIAL_DATA_SOURCE
-      - STREAM_DATA_SOURCE
     depends_on:
       - db
       - rabbit
     hostname: abacus
 
-  runner:
+  abacus_consumer:
     build:
       context: ../../
-      dockerfile: meerkat_dev/runner/Dockerfile
+      dockerfile: meerkat_dev/abacus_consumer/Dockerfile
     volumes:
       - "../../meerkat_abacus/:/var/www/meerkat_abacus"
       - "../../meerkat_runner/:/var/www/meerkat_runner"
       - "../../meerkat_api/:/var/www/meerkat_api"
       - "../../meerkat_frontend/:/var/www/meerkat_frontend"
       - "../../meerkat_libs/:/var/www/meerkat_libs"
-      - "../../meerkat_mad/:/var/www/meerkat_mad"
       - "~/.aws/credentials:/root/.aws/credentials"
+      - "../../meerkat_mad/:/var/www/meerkat_mad"
     environment:
       - "START_CELERY=1"
+      - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
+      - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
       - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
+      - "COUNTRY_CONFIG_DIR=/var/www/meerkat_mad/abacus/"
+      - "COUNTRY_CONFIG=mad_config.py"
+      - "HERMES_API_ROOT=http://nginx/hermes"
+      - "MEERKAT_TEST_DEVICE_MESSAGES=0"
+      - "DEVICE_MESSAGING_API=gcm"
+      - DB_DUMP
+      - IMPORT_FRACTION
+      - GET_DATA_FROM_S3=0
+      - MEERKAT_TEST_EMAILS
+      - ONLY_IMPORT_AFTER
+      - "INITIAL_DATA_SOURCE=LOCAL_CSV"
+      - "STREAM_DATA_SOURCE=AWS_S3"
     depends_on:
-      - db
       - rabbit
-    hostname: runner
-
+    hostname: abacus_consumer
 
   api:
     build:
@@ -91,6 +98,24 @@ services:
       - "COUNTRY_CONFIG=mad_config.py"
       - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
     hostname: api
+  api_background:
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/api_background/Dockerfile
+    volumes:
+      - "../../meerkat_abacus/:/var/www/meerkat_abacus"
+      - "../../meerkat_analysis/:/var/www/meerkat_analysis"
+      - "../../meerkat_api/:/var/www/meerkat_api"
+      - "../../meerkat_libs/:/var/www/meerkat_libs"
+      - "../../meerkat_mad/:/var/www/meerkat_mad"
+    environment:
+      - "MEERKAT_API_SETTINGS=/var/www/meerkat_mad/api/mad_config.py"
+      - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
+      - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
+      - "COUNTRY_CONFIG_DIR=/var/www/meerkat_mad/"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
+      - "LOGGING_URL=http://nginx/logging"
+    hostname: api_background
 
   frontend:
     build:
@@ -132,7 +157,11 @@ services:
     command: postgres -c config_file=/etc/postgresql.conf
 
   rabbit:
-    image: rabbitmq
+    build:
+      context: ../../
+      dockerfile: meerkat_dev/rabbit/Dockerfile
+    ports:
+      - "15672:15672"
     hostname: rabbit
 
   dynamodb:

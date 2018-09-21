@@ -42,20 +42,6 @@ services:
       - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
       - "COUNTRY_CONFIG_DIR=/var/www/meerkat_abacus/meerkat_abacus/country_config/"
       - "HERMES_API_ROOT=http://nginx/hermes"
-      - "MEERKAT_TEST_DEVICE_MESSAGES=0"
-      - "DEVICE_MESSAGING_API=gcm"
-      - DB_DUMP
-      - IMPORT_FRACTION
-      - GET_DATA_FROM_S3=0
-      - MEERKAT_TEST_EMAILS
-      - ONLY_IMPORT_AFTER
-      - "AGGREGATE_USERNAME=test"
-      - "AGGERGATE_PASSWORD=aggregate"
-      - "AGGREGATE_URL=http://democountryserver.emro.info"
-      - "FAKE_DATA_GENERATION=INTERNAL"
-      - "INITIAL_DATA_SOURCE=LOCAL_RDS"
-      - "STREAM_DATA_SOURCE=NO_STREAMING"
-      - "PERSISTENT_DATABASE_URL=postgresql+psycopg2://postgres:postgres@db/persistent_demo_db"
     depends_on:
       - db
       - rabbit
@@ -89,7 +75,8 @@ services:
       - "AGGREGATE_USERNAME=test"
       - "AGGERGATE_PASSWORD=aggregate"
       - "AGGREGATE_URL=http://democountryserver.emro.info"
-      - "FAKE_DATA_GENERATION=INTERNAL"
+      - "FAKE_DATA_GENERATION=SEND_TO_SQS"
+      - "SQS_ENDPOINT=http://sqs:9324"
       - "INITIAL_DATA_SOURCE=FAKE_DATA"
       - "STREAM_DATA_SOURCE=FAKE_DATA"
       - "PERSISTENT_DATABASE_URL=postgresql+psycopg2://postgres:postgres@db/persistent_demo_db"
@@ -130,7 +117,7 @@ services:
       - "COUNTRY_CONFIG_DIR=/var/www/meerkat_abacus/meerkat_abacus/country_config/"
       - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
       - "LOGGING_URL=http://nginx/logging"
-    hostname: api
+    hostname: api_background
 
   frontend:
     build:
@@ -249,3 +236,9 @@ services:
       - frontend
       - mob
     hostname: nginx
+
+  sqs:
+    image: vsouza/sqs-local
+    hostname: sqs
+    ports:
+      - "9324:9324"
