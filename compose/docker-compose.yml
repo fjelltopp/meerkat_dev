@@ -36,12 +36,21 @@ services:
       - "../../meerkat_libs/:/var/www/meerkat_libs"
       - "../abacus/dumps/:/var/www/dumps"
     environment:
-      - "START_CELERY=1"
-      - "DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/"
-      - "MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db"
-      - "MEERKAT_BROKER_URL=amqp://guest@rabbit//"
-      - "COUNTRY_CONFIG_DIR=/var/www/meerkat_abacus/meerkat_abacus/country_config/"
-      - "HERMES_API_ROOT=http://nginx/hermes"
+      - START_CELERY=1
+      - DATA_DIRECTORY=/var/www/meerkat_abacus/meerkat_abacus/data/
+      - MEERKAT_ABACUS_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db
+      - MEERKAT_BROKER_URL=amqp://guest@rabbit//
+      - COUNTRY_CONFIG_DIR=/var/www/meerkat_abacus/meerkat_abacus/country_config/
+      - HERMES_API_ROOT=http://nginx/hermes
+      - MAILING_KEY=password
+      - MEERKAT_TEST_DEVICE_MESSAGES=0
+      - DEVICE_MESSAGING_API=gcm
+      - DB_DUMP
+      - IMPORT_FRACTION
+      - GET_DATA_FROM_S3=0
+      - MEERKAT_TEST_EMAILS
+      - ONLY_IMPORT_AFTER
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
     depends_on:
       - db
       - rabbit
@@ -80,6 +89,8 @@ services:
       - "INITIAL_DATA_SOURCE=FAKE_DATA"
       - "STREAM_DATA_SOURCE=FAKE_DATA"
       - "PERSISTENT_DATABASE_URL=postgresql+psycopg2://postgres:postgres@db/persistent_demo_db"
+      - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
+
     depends_on:
       - rabbit
     hostname: abacus_consumer
@@ -215,6 +226,7 @@ services:
     environment:
       - "MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py"
       - "MEERKAT_API_URL=http://nginx/api"
+      - "MEERKAT_CONSUL_SETTINGS=/var/www/meerkat_consul/country_config/null_config.py"
     depends_on:
       - auth
       - api

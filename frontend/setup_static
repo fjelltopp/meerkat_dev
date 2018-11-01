@@ -1,5 +1,6 @@
 #!/bin/bash
 yarn install
 bower --allow-root install
+python /var/www/meerkat_frontend/translate.py compile
 gulp clean
 gulp

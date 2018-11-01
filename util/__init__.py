@@ -13,7 +13,7 @@ SUDO = os.environ.get('MEERKAT_SUDO', '')
 # https://github.com/meerkat-code/meerkat.git
 MANIFEST_URL = os.environ.get(
     'MEERKAT_MANIFEST',
-    'git@github.com:meerkat-code/meerkat.git'
+    'git@github.com:fjelltopp/meerkat.git'
 )
 DEV_MANIFEST = 'dev.xml'
 DEMO_MANIFEST = 'default.xml'
@@ -57,6 +57,9 @@ def up(args, extra_args):
     if args.fake_real_time:
         env += ['export', 'INITIAL_DATA_SOURCE=AWS_S3', '&&']
         env += ['export', 'FAKE_DATA_GENERATION=INTERNAL', '&&']
+        env += ['export', 'STREAM_DATA_SOURCE=NO_STREAMING', '&&']
+    if args.csv:
+        env += ['export', 'INITIAL_DATA_SOURCE=LOCAL_CSV', '&&']
         env += ['export', 'STREAM_DATA_SOURCE=NO_STREAMING', '&&']
     if args.start_date:
         env += ['export', 'ONLY_IMPORT_AFTER=' + args.start_date, "&&"]
