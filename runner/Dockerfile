@@ -11,7 +11,6 @@ RUN apt-get update &&\
     apt-get clean
 
 ENV PATH=/miniconda/bin:${PATH}
-ENV PYTHONPATH=/miniconda/lib/{PYT_VERSION}/site-packages
 RUN curl -LO https://repo.continuum.io/miniconda/${MINICONDA_PACKAGE} &&\
     bash ${MINICONDA_PACKAGE} -p /miniconda -b &&\
     rm ${MINICONDA_PACKAGE} &&\
@@ -34,6 +33,8 @@ RUN pip install -r runner_req.tmp
 ADD meerkat_abacus/requirements.txt abacus_req.tmp
 RUN pip install -r abacus_req.tmp &&\
     rm *_req.tmp
+
+ENV PYTHONPATH /miniconda/lib/{PYT_VERSION}/site-packages:/var/www/meerkat_libs:/var/www/meerkat_api/api_background:/var/www/meerkat_abacus
 
 WORKDIR /var/www/meerkat_runner
 
