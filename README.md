@@ -1,6 +1,8 @@
 # meerkat_dev
 Contains the configs and scripts required to run the Meerkat development environment.
 
+On some systems (Mac) it might be required to `pip install passlib` and execute the script by calling `python2 mk` instead.
+
 Get Started
 -----------
 1. Create folder to store the Meerkat Code base. e.g. /home/[user]/meerkat
