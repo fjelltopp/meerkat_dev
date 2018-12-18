@@ -25,26 +25,27 @@ actions['setup'] = subparsers.add_parser(
     help='Sets up the Meerkat codebase locally (Google repo).',
 )
 actions['setup'].add_argument(
-    '-a', '--all',
-    help='Download the complete development environment, including secure '
-         'country config repos - N.B. you will need special access to be '
-         'granted by the Meerkat Administrators to use this setup.',
-    action='store_true'
+    '-c', '--country',
+    help='Specify the particular country (or "all") for which you want to run '
+         'the dev env.  N.B. you will need access to GitHub country config '
+         'repos.',
+    choices=['all', 'jordan', 'mad', 'somalia']
 )
 actions['setup'].set_defaults(func=util.setup)
 
 actions['init'] = subparsers.add_parser(
     'init',
     description="Initializes Meerkat Code project and google repo.",
-    help="Configures the already existing Meerkat codebase with already checkout repositories (Google repo)."
+    help="Configures the already existing Meerkat codebase with already "
+         "checkout repositories (Google repo)."
 )
 actions['init'].set_defaults(func=util.init)
 
 actions['init'].add_argument(
-    '-a', '--all',
-    help='Initialize the complete development environment, including secure '
-         'country config repos',
-    action='store_true'
+    '-c', '--country',
+    help='Initialize the development environment for a specific country (or '
+         '"all"). N.B you will need access to the Gitub country config repos',
+    choices=['all', 'jordan', 'mad', 'somalia']
 )
 
 # Add the Google repo command arguments

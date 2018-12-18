@@ -15,8 +15,7 @@ MANIFEST_URL = os.environ.get(
     'MEERKAT_MANIFEST',
     'git@github.com:fjelltopp/meerkat.git'
 )
-DEV_MANIFEST = 'dev.xml'
-DEMO_MANIFEST = 'default.xml'
+DEFAULT_MANIFEST = 'default.xml'
 DUMPS_PATH = (os.path.abspath(os.path.dirname(__file__)) +
               "/../.settings/dumps/")
 COMPOSE_PATH = (os.path.abspath(os.path.dirname(__file__)) +
@@ -169,7 +168,7 @@ def dump(args, extra):
 
 def init(args, extra):
     print("Initializing the Meerkat codebase...")
-    manifest = DEV_MANIFEST if args.all else DEMO_MANIFEST
+    manifest = args.country + '.xml' if args.country else DEFAULT_MANIFEST
     repo.main(['init', '-u', MANIFEST_URL, '-m', manifest])
     print("Meerkat initialized")
     print("Meerkat status:")
@@ -184,9 +183,9 @@ def setup(args, extra):
     print('Setting up the Meerkat codebase...')
     print('This will destroy changes, resetting everything to the remote.')
 
-    if raw_input('ARE YOU SURE YOU WANT TO CONTINUE? (y/N) ') in ['Y', 'y', 'yes', 'Yes', 'YES']:
+    if raw_input('SURE YOU WANT TO CONTINUE? (y/N) ').lower() in ['y', 'yes']:
         create_dummy_aws_config()
-        manifest = DEV_MANIFEST if args.all else DEMO_MANIFEST
+        manifest = args.country + '.xml' if args.country else DEFAULT_MANIFEST
         repo.main(['init', '-u', MANIFEST_URL, '-m', manifest])
         repo.main(['sync', '--force-sync'])
         print('Meerkat code synced')
