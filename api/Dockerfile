@@ -31,7 +31,9 @@ RUN pip install -r abacus_req.tmp
 ADD meerkat_api/api_background/requirements.txt apiback_req.tmp
 RUN pip install -r apiback_req.tmp
 ADD meerkat_analysis/requirements.txt analysis_req.tmp
+ADD meerkat_analysis/requirements_conda.txt analysis_req_conda.tmp
 RUN pip install -r analysis_req.tmp
+RUN conda install --yes --file analysis_req_conda.tmp
 ADD meerkat_api/requirements.txt api_req.tmp
 RUN pip install -r api_req.tmp
 

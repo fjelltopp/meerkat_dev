@@ -1,6 +1,10 @@
 # meerkat_dev
 Contains the configs and scripts required to run the Meerkat development environment.
 
+System requirements:
+-----------
+You need to have Linux or Macos, `python 2.7` with `pip`, `passlib`, `git` (configured with your ssh key), `docker` and `docker-compose`
+
 Get Started
 -----------
 1. Create folder to store the Meerkat Code base. e.g. /home/[user]/meerkat
@@ -15,3 +19,5 @@ Get Started
    all country configs use `--all` option to install the complete development
    environment.
 6. Use `mk -h` to read the script's documentation.
+
+
