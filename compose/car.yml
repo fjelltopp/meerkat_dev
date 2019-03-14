@@ -247,3 +247,9 @@ services:
       - frontend
       - mob
     hostname: nginx
+
+  sqs:
+    image: vsouza/sqs-local
+    hostname: sqs
+    ports:
+      - "9324:9324"
