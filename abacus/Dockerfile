@@ -34,8 +34,8 @@ RUN pip install -r abacus_req.tmp &&\
 
 
 ENV PYTHONPATH /miniconda/lib/{PYT_VERSION}/site-packages:/var/www/meerkat_libs:/var/www/meerkat_api/api_background:/var/www/meerkat_abacus
-WORKDIR /var/www/meerkat_api/api_background
 
-ADD meerkat_dev/api_background/start_celery /usr/bin/start_celery
-
-CMD ["start_celery"]
+#Copy the start up script and setup working directory.
+COPY meerkat_dev/abacus/start_pipeline.sh /usr/bin/start_pipeline
+COPY meerkat_dev/abacus/start_consumer.sh /usr/bin/start_consumer
+COPY meerkat_dev/abacus/start_api_background.sh /usr/bin/start_api_background
