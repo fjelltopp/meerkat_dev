@@ -1,6 +1,0 @@
-#!/bin/bash
-cd meerkat_abacus
-celery -A meerkat_abacus.app beat &
-
-python orchestrate.py
-

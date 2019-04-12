@@ -1,7 +1,12 @@
 FROM python:3.6.2
 
-RUN apt-get update &&\
-    pip3 install uwsgi
+RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
+
+RUN sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
+
+RUN apt-get -o Acquire::Check-Valid-Until=false update
+# Install global requirements
+RUN pip3 install uwsgi
 
 WORKDIR /var/www/meerkat_mob
 ADD meerkat_mob/requirements.txt mob_req.tmp
