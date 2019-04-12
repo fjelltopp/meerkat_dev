@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cd /var/www/meerkat_runner
-
-celery -A  meerkat_runner.celery.app worker -l info --concurrency 2

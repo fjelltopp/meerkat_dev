@@ -6,9 +6,13 @@ ENV LANG C.UTF-8
 ENV MINICONDA_PACKAGE Miniconda3-4.3.11-Linux-x86_64.sh
 ENV PYT_VERSION python3.6
 
-RUN apt-get update &&\
-    apt-get -y install tk-dev curl postgresql-client libpq-dev libgeos-c1 &&\
-    apt-get clean
+RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
+
+RUN sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
+
+RUN apt-get -o Acquire::Check-Valid-Until=false update
+RUN apt-get -y install tk-dev curl postgresql-client libpq-dev libgeos-c1
+RUN apt-get clean
 
 ENV PATH=/miniconda/bin:${PATH}
 ENV PYTHONPATH=/miniconda/lib/${PYT_VERSION}/site-packages

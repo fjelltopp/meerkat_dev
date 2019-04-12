@@ -47,7 +47,7 @@ services:
       - ONLY_IMPORT_AFTER
       - MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py
       - LOGGER_NAME=meerkat_abacus_pipeline
-      - LOGGER_LEVEL=INFO
+      - LOGGING_LEVEL=DEBUG
       - PYTHONUNBUFFERED=1
     depends_on:
       - db
@@ -92,7 +92,7 @@ services:
       - PERSISTENT_DATABASE_URL=postgresql+psycopg2://postgres:postgres@db/persistent_demo_db
       - MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py
       - LOGGER_NAME=meerkat_abacus_consumer
-      - LOGGER_LEVEL=INFO
+      - LOGGING_LEVEL=DEBUG
       - PYTHONUNBUFFERED=1
 
     depends_on:
@@ -120,7 +120,7 @@ services:
       - MEERKAT_AUTH_SETTINGS=/var/www/meerkat_libs/meerkat_libs/auth_client/dev_auth_config.py
       - LOGGING_URL=http://nginx/logging
       - LOGGER_NAME=meerkat_api_background
-      - LOGGER_LEVEL=INFO
+      - LOGGING_LEVEL=DEBUG
       - PYTHONUNBUFFERED=1
     hostname: api_background
     command: start_api_background
@@ -178,7 +178,7 @@ services:
     image: mdillon/postgis
     hostname: db
     environment:
-        - COUNTRY=caragascar
+        - COUNTRY=car
     ports:
       - 5432:5432
     volumes:
