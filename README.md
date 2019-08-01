@@ -3,7 +3,13 @@ Contains the configs and scripts required to run the Meerkat development environ
 
 System requirements:
 -----------
-You need to have Linux or Macos, `python 2.7` with `pip`, `passlib`, `git` (configured with your ssh key), `docker` and `docker-compose`
+You need to have Linux or Macos, `python 2.7` with `pip`, `git` (configured with your ssh key), `docker` and `docker-compose`
+
+To install pip:
+```
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python2 get-pip.py --user
+```
 
 Get Started
 -----------
