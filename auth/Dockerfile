@@ -2,9 +2,9 @@ FROM python:3.7
 
 RUN apt-get update
 # Install global requirements
-    apt-get install -y nodejs gettext &&\
+RUN apt-get install -y nodejs npm gettext &&\
     apt-get clean &&\
-    npm install -g bower gulp yarn &&\
+    npm install -g bower gulp yarn
 
 WORKDIR /var/www/
 ADD meerkat_libs/requirements.txt libs_req.tmp
