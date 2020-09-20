@@ -1,6 +1,5 @@
 FROM debian:buster
 
-
 RUN apt-get update
 RUN apt-get -y install curl bzip2 build-essential postgresql-client libpq-dev libgeos-c1v5 python3 python3-pip
 RUN apt-get clean
@@ -18,7 +17,6 @@ RUN pip3 install -r abacus_req.tmp &&\
 ADD meerkat_api/requirements.txt abacus_req.tmp
 RUN pip3 install -r abacus_req.tmp &&\
     rm *_req.tmp
-
 
 ENV PYTHONPATH /var/www/meerkat_libs:/var/www/meerkat_api/api_background:/var/www/meerkat_abacus
 

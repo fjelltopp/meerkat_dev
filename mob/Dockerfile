@@ -2,7 +2,6 @@ FROM python:3.7
 
 RUN apt-get update
 # Install global requirements
-RUN pip3 install uwsgi
 
 WORKDIR /var/www/meerkat_mob
 ADD meerkat_mob/requirements.txt mob_req.tmp

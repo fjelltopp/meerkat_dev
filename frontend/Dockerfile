@@ -1,13 +1,12 @@
 FROM python:3.7
 
-RUN apt-get -o Acquire::Check-Valid-Until=false update
+RUN apt-get update
 
 # Install global requirements
 ENV PYTHONPATH=/var/www/meerkat_libs
 RUN wget -qO- https://deb.nodesource.com/setup_10.x | sed 's/apt-get update/apt-get -o Acquire::Check-Valid-Until=false update/' | bash - &&\
     apt-get install -y nodejs gettext ghostscript &&\
-    apt-get clean &&\
-    pip3 install uwsgi
+    apt-get clean
 RUN npm install -g bower gulp-cli yarn
 WORKDIR /var/www
 

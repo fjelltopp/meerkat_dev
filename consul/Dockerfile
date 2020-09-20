@@ -1,7 +1,6 @@
 FROM python:3.7
 
-RUN apt-get update &&\
-    pip3 install uwsgi
+RUN apt-get update
 
 WORKDIR /var/www/meerkat_consul
 

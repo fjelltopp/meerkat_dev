@@ -5,7 +5,6 @@ RUN apt-get update
     apt-get install -y nodejs gettext &&\
     apt-get clean &&\
     npm install -g bower gulp yarn &&\
-    pip3 install uwsgi
 
 WORKDIR /var/www/
 ADD meerkat_libs/requirements.txt libs_req.tmp
