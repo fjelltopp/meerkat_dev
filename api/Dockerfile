@@ -1,45 +1,21 @@
-FROM debian:jessie
+FROM debian:buster
 
-# http://bugs.python.org/issue19846
-# > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
-ENV LANG C.UTF-8
-ENV MINICONDA_PACKAGE Miniconda3-4.3.11-Linux-x86_64.sh
-ENV PYT_VERSION python3.6
-
-RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
-
-RUN sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
-
-RUN apt-get -o Acquire::Check-Valid-Until=false update
-RUN apt-get -y install tk-dev curl postgresql-client libpq-dev libgeos-c1
+RUN apt-get update
+RUN apt-get -y install tk-dev curl postgresql-client libpq-dev libgeos-c1v5 python3 python3-pip
 RUN apt-get clean
-
-ENV PATH=/miniconda/bin:${PATH}
-ENV PYTHONPATH=/miniconda/lib/${PYT_VERSION}/site-packages
-
-RUN curl -LO https://repo.continuum.io/miniconda/${MINICONDA_PACKAGE} &&\
-    bash ${MINICONDA_PACKAGE} -p /miniconda -b &&\
-    rm ${MINICONDA_PACKAGE} &&\
-    conda update -y conda &&\
-    conda install -y pandas &&\
-    pip install uwsgi
 
 RUN mkdir -p /var/www/meerkat_api
 WORKDIR /var/www
 
-# Install pip requirements. Add requirements list to bust-cache if any changes.
+# Install pip3 requirements. Add requirements list to bust-cache if any changes.
 ADD meerkat_libs/requirements.txt libs_req.tmp
-RUN pip install -r libs_req.tmp
+RUN pip3 install -r libs_req.tmp
 ADD meerkat_abacus/requirements.txt abacus_req.tmp
-RUN pip install -r abacus_req.tmp
-ADD meerkat_api/api_background/requirements.txt apiback_req.tmp
-RUN pip install -r apiback_req.tmp
+RUN pip3 install -r abacus_req.tmp
 ADD meerkat_analysis/requirements.txt analysis_req.tmp
-ADD meerkat_analysis/requirements_conda.txt analysis_req_conda.tmp
-RUN pip install -r analysis_req.tmp
-RUN conda install --yes --file analysis_req_conda.tmp
+RUN pip3 install -r analysis_req.tmp
 ADD meerkat_api/requirements.txt api_req.tmp
-RUN pip install -r api_req.tmp
+RUN pip3 install -r api_req.tmp
 
 # Add all above dependancies to the python path.  Do it late in the process so it is easy to change without breaking cache.
 ENV PYTHONPATH=${PYTHONPATH}:/var/www/meerkat_libs:/var/www/meerkat_abacus:/var/www/meerkat_api/api_background:/var/www/meerkat_analysis
