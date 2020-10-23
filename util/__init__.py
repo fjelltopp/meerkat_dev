@@ -183,7 +183,7 @@ def setup(args, extra):
     print('Setting up the Meerkat codebase...')
     print('This will destroy changes, resetting everything to the remote.')
 
-    if raw_input('SURE YOU WANT TO CONTINUE? (y/N) ').lower() in ['y', 'yes']:
+    if input('SURE YOU WANT TO CONTINUE? (y/N) ').lower() in ['y', 'yes']:
         create_dummy_aws_config()
         manifest = args.country + '.xml' if args.country else DEFAULT_MANIFEST
         repo.main(['init', '-u', MANIFEST_URL, '-m', manifest])
