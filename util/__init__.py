@@ -3,7 +3,7 @@ import subprocess
 import sys
 from datetime import datetime
 
-import repo
+from . import repo
 from util.dummy_aws_credentials import create_dummy_aws_config
 
 # Some settings

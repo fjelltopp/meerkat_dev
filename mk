@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
-from util import dev_accounts
+#!/usr/bin/env python3
 import util
+from util import dev_accounts
 import argparse
 import sys
 

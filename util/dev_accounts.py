@@ -16,17 +16,10 @@ before starting the dev environment, or if the the dev environment is already
 up, then the command `local_db.py` must be rerun in the auth and hermes docker
 containers.
 """
-import pip
 import ast
 import os
 from getpass import getpass
-
-# For the password hashing - passlib may or may not already be installed.
-try:
-    from passlib.hash import pbkdf2_sha256
-except ImportError:
-    pip.main(['install', 'passlib'])
-    from passlib.hash import pbkdf2_sha256
+from passlib.hash import pbkdf2_sha256
 
 
 # A utility function to require input when necessary.
