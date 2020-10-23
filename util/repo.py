@@ -222,7 +222,7 @@ GIT = 'git'                      # our git command
 #
 # git-1.7 is in (EOL) Ubuntu Precise.
 MIN_GIT_VERSION = (1, 7, 2)      # minimum supported git version
-repodir = '.repo'                # name of repo's private directory
+repodir = os.path.abspath(os.path.dirname(__file__)) + '/../../.repo'
 S_repo = 'repo'                  # special repo repository
 S_manifests = 'manifests'        # special manifest repository
 REPO_MAIN = S_repo + '/main.py'  # main script
