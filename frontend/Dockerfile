@@ -10,11 +10,14 @@ RUN wget -qO- https://deb.nodesource.com/setup_10.x | sed 's/apt-get update/apt-
 RUN npm install -g bower gulp-cli yarn
 WORKDIR /var/www
 
+RUN ln -s /usr/bin/python3 /usr/bin/python & \
+    ln -s /usr/bin/pip3 /usr/bin/pip
+
 # Install pip requirements. Add requirements list to bust-cache if any changes.
 ADD meerkat_libs/requirements.txt libs_req.tmp
-RUN pip3 install -r libs_req.tmp && rm libs_req.tmp
+RUN pip install -r libs_req.tmp && rm libs_req.tmp
 ADD meerkat_frontend/requirements.txt frontend_req.tmp
-RUN pip3 install -r frontend_req.tmp && rm frontend_req.tmp
+RUN pip install -r frontend_req.tmp && rm frontend_req.tmp
 
 # Install dependancies and configs.
 # requirements.txt most likely to change so put it last

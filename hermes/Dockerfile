@@ -4,8 +4,11 @@ RUN apt-get update
 
 WORKDIR /var/www/meerkat_hermes
 
+RUN ln -s /usr/bin/python3 /usr/bin/python & \
+    ln -s /usr/bin/pip3 /usr/bin/pip
+
 ADD meerkat_hermes/requirements.txt /var/www/meerkat_hermes/requirements.txt
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
 ENV PYTHONPATH=/var/www/meerkat_libs
 
