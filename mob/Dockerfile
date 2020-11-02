@@ -1,16 +1,15 @@
-FROM python:3.6.2
+FROM python:3.7
 
-RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
-
-RUN sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
-
-RUN apt-get -o Acquire::Check-Valid-Until=false update
+RUN apt-get update
 # Install global requirements
-RUN pip3 install uwsgi
 
+RUN ln -s /usr/bin/python3 /usr/bin/python & \
+    ln -s /usr/bin/pip3 /usr/bin/pip
+
+# A note: cryptography might be failing for some reason. 
 WORKDIR /var/www/meerkat_mob
 ADD meerkat_mob/requirements.txt mob_req.tmp
-RUN pip3 install -r mob_req.tmp && rm mob_req.tmp
+RUN pip install -r mob_req.tmp && rm mob_req.tmp
 
 ADD meerkat_dev/mob/uwsgi/app.ini /var/www/uwsgi/app.ini
 ADD meerkat_dev/mob/run /usr/bin/run

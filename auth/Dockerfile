@@ -1,22 +1,19 @@
-FROM python:3.6.2
+FROM python:3.7
 
-RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
-
-RUN sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
-
-RUN apt-get -o Acquire::Check-Valid-Until=false update
+RUN apt-get update
 # Install global requirements
-RUN wget -qO- https://deb.nodesource.com/setup_10.x | sed 's/apt-get update/apt-get -o Acquire::Check-Valid-Until=false update/' | bash - &&\
-    apt-get install -y nodejs gettext &&\
+RUN apt-get install -y nodejs npm gettext &&\
     apt-get clean &&\
-    npm install -g bower gulp yarn &&\
-    pip3 install uwsgi
+    npm install -g bower gulp yarn
+
+RUN ln -s /usr/bin/python3 /usr/bin/python & \
+    ln -s /usr/bin/pip3 /usr/bin/pip
 
 WORKDIR /var/www/
 ADD meerkat_libs/requirements.txt libs_req.tmp
-RUN pip3 install -r libs_req.tmp
+RUN pip install -r libs_req.tmp
 ADD meerkat_auth/requirements.txt auth_req.tmp
-RUN pip3 install -r auth_req.tmp &&\
+RUN pip install -r auth_req.tmp &&\
     rm *_req.tmp
 
 WORKDIR /var/www/meerkat_auth

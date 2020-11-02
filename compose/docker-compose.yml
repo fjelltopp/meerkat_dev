@@ -201,20 +201,6 @@ services:
       - "MEERKAT_AUTH_ROOT=/auth"
     hostname: auth
 
-  mob:
-    build:
-      context: ../../
-      dockerfile: meerkat_dev/mob/Dockerfile
-    volumes:
-      - "../../meerkat_mob/:/var/www/meerkat_mob"
-      - "../.settings/:/var/www/.settings"
-      - "~/.aws/credentials:/root/.aws/credentials"
-    environment:
-      - "CONFIG_OBJECT=config.Development"
-      - "DB_URL=http://dynamodb:8000"
-      - "ORGANIZATION=DEMO"
-    hostname: mob
-
   logging:
     build:
       context: ../../
@@ -258,7 +244,6 @@ services:
     depends_on:
       - api
       - frontend
-      - mob
     hostname: nginx
 
   sqs:

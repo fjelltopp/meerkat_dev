@@ -16,25 +16,18 @@ before starting the dev environment, or if the the dev environment is already
 up, then the command `local_db.py` must be rerun in the auth and hermes docker
 containers.
 """
-import pip
 import ast
 import os
 from getpass import getpass
-
-# For the password hashing - passlib may or may not already be installed.
-try:
-    from passlib.hash import pbkdf2_sha256
-except ImportError:
-    pip.main(['install', 'passlib'])
-    from passlib.hash import pbkdf2_sha256
+from passlib.hash import pbkdf2_sha256
 
 
 # A utility function to require input when necessary.
 def required_input(string):
-    value = raw_input(string)
+    value = input(string)
     while not value:
         print("Value required, try again.")
-        value = raw_input(string)
+        value = input(string)
     return value
 
 
@@ -85,10 +78,10 @@ def users(args, extra):
         # Get account information from user.
         user['username'] = required_input('Username*: ')
         user['first_name'] = required_input('First Name*: ')
-        user['last_name'] = raw_input('Last Name: ')
+        user['last_name'] = input('Last Name: ')
         user['email'] = required_input('Email*: ')
-        user['sms'] = raw_input('SMS number: ')
-        user['slack'] = '@' + raw_input('Meerkat Slack Username: ')
+        user['sms'] = input('SMS number: ')
+        user['slack'] = '@' + input('Meerkat Slack Username: ')
         print('Passwords will be hashed.')
         password = getpass('Password*: ')
         password2 = getpass('Retype password*: ')
@@ -123,10 +116,10 @@ def users(args, extra):
 
         # Check that the user really wants to delete the user.
         check_str = 'Are you sure you want to remove {}? y/n '.format(username)
-        check = raw_input(check_str)
+        check = input(check_str)
         while check != ('y' or 'n'):
             print('Must respond with \'y\' or \'n\'.')
-            check = raw_input(check_str)
+            check = input(check_str)
 
         # Perform the action
         if check is 'y':
@@ -139,10 +132,10 @@ def users(args, extra):
     if args.action == 'clear':
 
         # Check that the user really wants to clear all accounts.
-        check = raw_input('Are you sure you want to clear all accounts? y/n ')
+        check = input('Are you sure you want to clear all accounts? y/n ')
         while check not in ['y', 'n']:
             print('Must respond with \'y\' or \'n\'.')
-            check = raw_input('Are you sure you want to clear all accounts? y/n ')
+            check = input('Are you sure you want to clear all accounts? y/n ')
 
         # Do the clearning.
         if check is 'y':

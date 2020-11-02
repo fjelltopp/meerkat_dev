@@ -18,7 +18,7 @@ confirmation_message = 'Would you like to create dummy aws credentials in {}? (Y
 
 def create_dummy_aws_config(config_directory=default_config_directory):
     if not os.path.exists(config_directory):
-        if raw_input(confirmation_message.format(config_directory)) not in ['n', 'N', 'No', 'no', 'NO']:
+        if input(confirmation_message.format(config_directory)) not in ['n', 'N', 'No', 'no', 'NO']:
             os.makedirs(config_directory)
             with file('{}/config'.format(config_directory), mode='w') as config_file:
                 config_file.write(aws_config)

@@ -1,9 +1,10 @@
 import os
+from multiprocessing.context import Process
 import subprocess
 import sys
 from datetime import datetime
 
-import repo
+from . import repo
 from util.dummy_aws_credentials import create_dummy_aws_config
 
 # Some settings
@@ -21,6 +22,10 @@ DUMPS_PATH = (os.path.abspath(os.path.dirname(__file__)) +
 COMPOSE_PATH = (os.path.abspath(os.path.dirname(__file__)) +
                 "/../compose/")
 
+def _run_repo_main(_args):
+    p = Process(target=repo.main, args=(_args,))
+    p.start()
+    p.join()
 
 def call_command(args):
     """
@@ -33,10 +38,10 @@ def call_command(args):
             shell=True,
             cwd=COMPOSE_PATH
         )
-        if retcode is not 0:
-            print >> sys.stderr, "Command not successful. Returned", retcode
+        if retcode != 0:
+            print(f"Command not successful. Returned {retcode}", file=sys.stderr)
     except OSError as e:
-        print >> sys.stderr, "Execution failed:", e
+        print(f"Execution failed: {e}", file=sys.stderr)
 
 
 def up(args, extra_args):
@@ -119,9 +124,9 @@ def run_repo(args, extra):
     """
     if args.action == "repo":
         print(extra)
-        repo.main(extra)
+        _run_repo_main(extra)
     else:
-        repo.main([args.action] + extra)
+        _run_repo_main([args.action] + extra)
 
 
 def dump(args, extra):
@@ -169,10 +174,10 @@ def dump(args, extra):
 def init(args, extra):
     print("Initializing the Meerkat codebase...")
     manifest = args.country + '.xml' if args.country else DEFAULT_MANIFEST
-    repo.main(['init', '-u', MANIFEST_URL, '-m', manifest])
+    _run_repo_main(['init', '-u', MANIFEST_URL, '-m', manifest])
     print("Meerkat initialized")
     print("Meerkat status:")
-    repo.main(['status'])
+    _run_repo_main(['status'])
 
 
 def setup(args, extra):
@@ -183,15 +188,15 @@ def setup(args, extra):
     print('Setting up the Meerkat codebase...')
     print('This will destroy changes, resetting everything to the remote.')
 
-    if raw_input('SURE YOU WANT TO CONTINUE? (y/N) ').lower() in ['y', 'yes']:
+    if input('SURE YOU WANT TO CONTINUE? (y/N) ').lower() in ['y', 'yes']:
         create_dummy_aws_config()
         manifest = args.country + '.xml' if args.country else DEFAULT_MANIFEST
-        repo.main(['init', '-u', MANIFEST_URL, '-m', manifest])
-        repo.main(['sync', '--force-sync'])
+        _run_repo_main(['init', '-u', MANIFEST_URL, '-m', manifest])
+        _run_repo_main(['sync', '--force-sync'])
         print('Meerkat code synced')
-        repo.main(['forall', '-c', 'git', 'checkout', 'master'])
+        _run_repo_main(['forall', '-c', 'git', 'checkout', 'master'])
         try:
-            repo.main(['forall', '-c', 'git', 'checkout',
+            _run_repo_main(['forall', '-c', 'git', 'checkout',
                        '-q', 'development'])
         except subprocess.CalledProcessError:
             print('Some repos do not have a development branch.')
@@ -199,5 +204,5 @@ def setup(args, extra):
         print('Master and Development branches created on your '
               'local machine.\nDevelopment branch checked out where '
               'available.')
-        repo.main(['status'])
+        _run_repo_main(['status'])
         print('--SETUP COMPLETE--')
